@@ -1,0 +1,35 @@
+<div class="container">
+  <h1 class="center">Profile settings</h1>
+  <form [formGroup]="profileSettingsForm" (click)="save()">
+    <div class="form-input">
+
+      <mat-form-field class="example-button-row mt-2">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" class="mat-form-field-input">
+      </mat-form-field>
+
+      <mat-form-field class="example-button-row mt-2">
+        <mat-label>Bio</mat-label>
+        <input matInput formControlName="bio" class="mat-form-field-input">
+      </mat-form-field>
+
+      <div class="container">
+        <div class="card">
+          <div class="card-header">
+            Upload image
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Select a file for upload</h5>
+            <input type="file" id="file-upload" accept="image/*">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="center mt-2">
+      <div class="example-button-row">
+        <button mat-raised-button class="register-button" color="accent"> Save </button>
+      </div>
+    </div>
+  </form>
+</div>

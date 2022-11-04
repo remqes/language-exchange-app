@@ -1,0 +1,70 @@
+section {
+  display: table;
+}
+
+.container {
+  position: relative;
+  display: grid;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  width: 200px;
+}
+
+.example-button-row .mat-button-base {
+  margin: 8px 8px 8px 8px;
+  display: grid;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+.container-buttons {
+  justify-self: center;
+}
+
+button {
+  width: 10.25em;
+  height: 3.25em;
+  font-family: Quicksand, Arial, Helvetica, sans-serif;
+  box-sizing: content-box;
+  background-color: aqua;
+  color: black;
+  padding-top: 1.25rem;
+  font-size: 150%;
+}
+
+button:hover {
+  transform: scale(1.05, 1.05);
+}
+
+p {
+  font-family: Quicksand, Arial, Helvetica, sans-serif;
+  font-size: 350%;
+}
+
+.container-text {
+  margin-top: 4rem;
+  margin-bottom: 3.5rem;
+  justify-self: center;
+}
+
+@media screen and (max-width: 770px) {
+}
