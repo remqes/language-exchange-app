@@ -45,7 +45,7 @@ button {
   height: 3.25em;
   font-family: Quicksand, Arial, Helvetica, sans-serif;
   box-sizing: content-box;
-  background-color: aqua;
+  background-color: #c49504;
   color: black;
   padding-top: 1.25rem;
   font-size: 150%;
@@ -62,9 +62,14 @@ p {
 
 .container-text {
   margin-top: 4rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 1rem;
   justify-self: center;
 }
 
-@media screen and (max-width: 770px) {
+.main-image {
+  width: 16.9375rem;
+  height: 12rem;
 }
+
+/* @media screen and (max-width: 770px) {
+} */

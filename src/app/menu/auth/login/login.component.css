@@ -24,6 +24,10 @@
   justify-content: center;
 }
 
+.move-to-register {
+  color: #31528c;
+}
+
 .text-center {
   text-align: center;
 }
@@ -35,15 +39,16 @@
 
 .forgot-password a {
   text-decoration: none;
-  color: black;
+  color: #31528c;
 }
 
 h1 {
   font-family: 'Quicksand';
+  color: #31528c;
 }
 
 .example-button-row input {
-  caret-color: black;
+  caret-color: #31528c;
 }
 
 .example-button-row button {
@@ -59,8 +64,8 @@ h1 {
 .register-button {
   font-size: 85%;
   background-color: white;
-  color: black;
-  border: 1px solid black;
+  color: #31528c;
+  border: 1px solid #31528c;
 }
 
 .register-button:hover {
@@ -68,9 +73,9 @@ h1 {
 }
 
 .login-button {
-  border: 1px solid black;
+  border: 1px solid #31528c;
   background-color: white;
-  color: black;
+  color: #31528c;
 }
 
 .login-button:hover {
@@ -80,9 +85,9 @@ h1 {
 .google-button {
   padding-left: 4rem;
   padding-right: 4rem;
-  border: 1px solid black;
+  border: 1px solid #31528c;
   background-color: white;
-  color: black;
+  color: #31528c;
 }
 
 .google-button:hover {
@@ -91,26 +96,30 @@ h1 {
 
 /* input placeholder color  */
 ::ng-deep .mat-form-field-label {
-  color: gray !important;
+  color: #4472c4 !important;
 }
 
 /* input underline before edit color  */
 ::ng-deep .mat-form-field-underline{
-  background-color: black !important;
+  background-color: #31528c !important;
 }
 
 /* input underline after edit color  */
 ::ng-deep.mat-form-field-ripple {
-  background-color: black !important;
+  background-color: #31528c !important;
 }
 
 /* input required marker color */
 ::ng-deep.mat-form-field-required-marker {
-  color: gray !important;
+  color: #4472c4 !important;
 }
 
 ::ng-deep.mat-error {
-  color: gray !important;
+  color: #4472c4 !important;
+}
+
+::ng-deep.mat-focused {
+  color: #31528c !important;
 }
 
 

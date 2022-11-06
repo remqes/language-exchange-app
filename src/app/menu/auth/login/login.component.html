@@ -1,6 +1,6 @@
 <div class="register-container">
   <div class="example-button-row me-3">
-    <span>Don't have an account?
+    <span class="move-to-register">Don't have an account?
       <button mat-raised-button class="register-button ms-2" [routerLink]="['/signup/register']"> Sign Up </button>
     </span>
   </div>
@@ -30,7 +30,7 @@
       <mat-form-field class="example-button-row mt-2">
         <mat-label>Password</mat-label>
         <input autocomplete="on" min="8" type="{{(showPassword === false) ? 'password' : 'text'}}" matInput formControlName="password" class="mat-form-field-input">
-        <mat-icon matSuffix style="cursor: pointer;" (click)="togglePassword('password')">
+        <mat-icon matSuffix style="cursor: pointer; color: #31528c;" (click)="togglePassword('password')">
           {{ !showPassword ? 'visibility' : 'visibility_off' }}
         </mat-icon>
         <mat-error *ngIf="password?.errors?.['required']">

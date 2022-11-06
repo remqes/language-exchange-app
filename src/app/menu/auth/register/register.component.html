@@ -1,6 +1,6 @@
 <div class="login-container">
   <div class="example-button-row me-3">
-    <span>Already have an account?
+    <span class="move-to-login">Already have an account?
       <button mat-raised-button class="login-button ms-2" [routerLink]="['/signup/login']"> Sign In </button>
     </span>
   </div>
@@ -30,7 +30,7 @@
       <mat-form-field class="example-button-row mt-2">
         <mat-label>Password</mat-label>
         <input autocomplete="on" min="8" type="{{(showPassword === false) ? 'password' : 'text'}}" matInput formControlName="password" class="mat-form-field-input">
-              <mat-icon matSuffix style="cursor: pointer;" (click)="togglePassword('password')">
+              <mat-icon matSuffix style="cursor: pointer; color: #31528c;" (click)="togglePassword('password')">
                 {{ !showPassword ? 'visibility' : 'visibility_off' }}
               </mat-icon>
         <mat-error *ngIf="password?.errors?.['required']">
@@ -44,7 +44,7 @@
       <mat-form-field class="example-button-row mt-2">
         <mat-label>Confirm password</mat-label>
         <input autocomplete="on" min="8" type="{{(showConfirmPassword === false) ? 'password' : 'text'}}" matInput formControlName="confirmPassword" class="mat-form-field-input">
-              <mat-icon matSuffix style="cursor: pointer;" (click)="togglePassword('confirmPassword')">
+              <mat-icon matSuffix style="cursor: pointer; color: #31528c;" (click)="togglePassword('confirmPassword')">
                 {{ !showConfirmPassword ? 'visibility' : 'visibility_off' }}
               </mat-icon>
         <mat-error *ngIf="confirmPassword?.errors?.['required']">

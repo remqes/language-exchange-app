@@ -1,23 +1,23 @@
 <ng-container *ngIf="isUserLogged">
-  <nav class="navbar navbar-light">
-    <div class="container">
-      <ul class="nav navbar-nav pull-xs-right">
+  <div class="container">
+
+    <div class="nav-bar">
+      <img mat-card-image src="../../../assets/logo.png">
+      <ul>
         <li class="nav-item">
-          <a routerLink="/partners" class="nav-link" i18n>Partners</a>
+          <button class="nav-link menu-button" mat-raised-button i18n routerLink="/partners">Partners</button>
         </li>
         <li class="nav-item">
-          <a routerLink="/chats" class="nav-link" i18n>Chats</a>
+          <button class="nav-link menu-button" mat-raised-button i18n routerLink="/chats">Chats</button>
         </li>
         <li class="nav-item">
-          <a routerLink="/profile" class="nav-link" i18n>Profile</a>
+          <button class="nav-link menu-button" mat-raised-button i18n routerLink="/profile">Profile</button>
         </li>
         <li class="nav-item">
-          <a routerLink="/learning" class="nav-link" i18n>Learning</a>
+          <button class="nav-link menu-button" mat-raised-button i18n routerLink="/learning">Learning</button>
         </li>
       </ul>
+      <button mat-raised-button class="logout-button" (click)="logout()">Log out</button>
     </div>
-  </nav>
-  <li class="nav-item">
-    <button (click)="logout()">Log out</button>
-  </li>
+  </div>
 </ng-container>

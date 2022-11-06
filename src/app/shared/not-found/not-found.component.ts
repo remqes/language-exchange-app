@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-not-found',
@@ -8,13 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class NotFoundComponent implements OnInit {
   navigateTo: string;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('token') || localStorage.getItem('googleToken')) {
       this.navigateTo = 'chats';
+      this.router.navigate(['/chats']);
     } else {
       this.navigateTo = 'main';
+      this.router.navigate(['/main']);
     }
     console.info('navigateto: ', this.navigateTo)
   }
