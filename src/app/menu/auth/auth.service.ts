@@ -51,7 +51,7 @@ export class AuthService {
       this.router.navigate(['/main']);
     },
     err => {
-      console.info("Somethings wrong: ", err);
+      console.error("Somethings wrong: ", err);
     });
   }
 

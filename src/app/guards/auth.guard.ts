@@ -8,15 +8,21 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 export class AuthGuard implements CanActivate {
 
   constructor(private afAuth: AngularFireAuth, private router: Router){}
+  isAuthenticated: boolean;
 
   async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean | UrlTree> {
       const user = await this.afAuth.currentUser;
-      const isAuthenticated = user ? true : false;
-      if (!isAuthenticated) {
+
+      if(localStorage.getItem('token') || localStorage.getItem('googleToken')) {
+        this.isAuthenticated = true;
+      } else {
+        this.isAuthenticated = user ? true : false;
+      }
+      if (!this.isAuthenticated) {
         this.router.navigate(['/not-found']);
       }
-      return isAuthenticated;
+      return this.isAuthenticated;
   }
 }

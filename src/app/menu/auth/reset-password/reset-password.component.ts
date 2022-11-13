@@ -29,7 +29,6 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   send() {
-    console.info(this.email?.errors)
     if(!this.email?.errors) {
       this.auth.resetPassword(this.email?.value);
       this.isEmailSended = true;

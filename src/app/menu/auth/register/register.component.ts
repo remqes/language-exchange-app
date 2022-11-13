@@ -62,6 +62,9 @@ export class RegisterComponent implements OnInit {
   registerGoogle() {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
       this.afAuth.signInWithPopup(googleAuthProvider).then((res) => {
+        const uid = res.user?.uid !== undefined ? res.user.uid : '';
+        this.userService.addUser({ uid });
+        localStorage.setItem('googleToken', 'true');
         this.router.navigate(['/profile/settings']);
       },
       err => {
@@ -71,7 +74,8 @@ export class RegisterComponent implements OnInit {
 
   togglePassword(password: string) {
     password === 'password' ?
-            this.showPassword = !this.showPassword : this.showConfirmPassword = !this.showConfirmPassword;
+            this.showPassword = !this.showPassword :
+            this.showConfirmPassword = !this.showConfirmPassword;
   }
 
 }

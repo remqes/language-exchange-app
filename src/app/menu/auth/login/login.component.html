@@ -7,13 +7,13 @@
 </div>
 <div class="container">
   <h1 class="center">Login</h1>
+  <div class="center mt-2">
+    <div class="example-button-row">
+      <button mat-raised-button class="google-button mt-3" color="accent" (click)="loginGoogle()"> Login with Google </button>
+    </div>
+  </div>
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="form-input">
-      <div class="center mt-2">
-        <div class="example-button-row">
-          <button mat-raised-button class="google-button mt-3" color="accent" (click)="loginGoogle()"> Login with Google </button>
-        </div>
-      </div>
       <hr class="mt-4 mb-4"/>
 
       <mat-form-field class="example-button-row mt-2">

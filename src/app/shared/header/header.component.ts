@@ -1,3 +1,4 @@
+import { UserService } from './../../menu/profile/profile-settings/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from './../../menu/auth/auth.service';
 import { Component, OnInit, DoCheck } from '@angular/core';
@@ -10,16 +11,20 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements DoCheck, OnInit {
   isUserLogged: boolean;
+  user$ = this.userService.currentUserProfile$;
+  username: string;
 
-  constructor(private auth: AuthService, private afAuth: AngularFireAuth, private router: Router) {
+  constructor(private auth: AuthService, private afAuth: AngularFireAuth, private router: Router, private userService: UserService) {
+    this.user$.subscribe((user) => {
+      user ? this.username = user.name! : ""
+    });
   }
 
   ngDoCheck(): void {
     localStorage.getItem('token') || localStorage.getItem('googleToken') ? this.isUserLogged = true :  this.isUserLogged = false;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   logout() {
     if (localStorage.getItem('googleToken')) {

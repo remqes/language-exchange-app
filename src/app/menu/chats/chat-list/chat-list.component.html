@@ -1,1 +1,60 @@
-<p>chat-list works!</p>
+<div class="container">
+  <div class="users-list mat-elevation-z5">
+    <div class="input">
+      <mat-form-field>
+        <input matInput [formControl]="searchControl" [matAutocomplete]="users">
+      </mat-form-field>
+      <mat-autocomplete #users="matAutocomplete">
+        <mat-option *ngFor="let user of users$ | async" (click)="startChat(user)">
+          {{ user.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+    <mat-selection-list [multiple]="false" [formControl]="chatHeaderControl">
+      <mat-divider></mat-divider>
+      <mat-list-option *ngFor="let chat of chats$ | async" [value]="chat.id">
+        <img matListAvatar [src]="chat.picture ? chat.picture : 'assets/kapitanjaszczurka.jpg'" />
+        <div mat-line class="message">
+          <p mat-line class="title">
+            <span class="spanname">{{ chat.name }}</span>
+            <span class="spandate">{{ chat.messageDate | showDate }}</span>
+          </p>
+          <span class="spanmessage">{{ chat.lastMessage }}</span>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <div class="messages-list mat-elevation-z5">
+    <div class="header" *ngIf="choosedChat$ | async as choosed; else noMessages">
+      <img [src]="choosed.picture ? choosed.picture : 'assets/kapitanjaszczurka.jpg'"/>
+      <p>{{ choosed.name }}</p>
+    </div>
+    <ng-template #noMessages>
+      <div class="nomessages">
+        <p mat-line class="no-messages-written">No written messages yet!</p>
+      </div>
+    </ng-template>
+    <mat-divider></mat-divider>
+    <div class="chat">
+      <ng-container *ngIf="user$ | async as user">
+        <div class="message-container" *ngFor="let message of getMessages$ | async"
+            [ngClass]="{ 'userField': message.senderId === user.uid}">
+          <div class="message-text">
+            {{ message.text }}
+            <span class="message-date">
+              {{ message.time | showDate }}
+            </span>
+          </div>
+        </div>
+        <div #chatEnd></div>
+      </ng-container>
+    </div>
+    <div class="input" *ngIf="choosedChat$ | async">
+      <mat-form-field>
+        <input matInput [formControl]="sendMessageControl" (keydown.enter)="send()">
+        <button class="send-button" mat-icon-button matSuffix (click)="send()"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

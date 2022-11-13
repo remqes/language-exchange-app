@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="center">Profile settings</h1>
-  <form [formGroup]="profileSettingsForm" (click)="save()">
-    <div class="form-input">
+  <form [formGroup]="profileSettingsForm" (ngSubmit)="save()">
+    <div class="form-input" *ngIf="user$ | async as user">
 
       <mat-form-field class="example-button-row mt-2">
         <mat-label>Name</mat-label>
@@ -13,17 +13,8 @@
         <input matInput formControlName="bio" class="mat-form-field-input">
       </mat-form-field>
 
-      <div class="container">
-        <div class="card">
-          <div class="card-header">
-            Upload image
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Select a file for upload</h5>
-            <input type="file" id="file-upload" accept="image/*">
-          </div>
-        </div>
-      </div>
+            <button type="button" mat-raised-button class="uploadFileButton" (click)="uploadFile.click()">Select a photo for upload</button>
+            <input #uploadFile type="file" hidden (change)="uploadImage($event, user)" />
 
     </div>
     <div class="center mt-2">

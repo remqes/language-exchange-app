@@ -15,6 +15,15 @@
   width: 100%;
 }
 
+.uploadFileButton {
+  font-family: 'Quicksand';
+  padding-left: 4rem;
+  padding-right: 4rem;
+  border: 1px solid #31528c;
+  background-color: white;
+  color: #31528c;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -25,7 +34,7 @@
 }
 
 h1 {
-  font-family: 'Quicksand';
+
 }
 
 /* input placeholder color  */

@@ -19,7 +19,6 @@ export class NotFoundComponent implements OnInit {
       this.navigateTo = 'main';
       this.router.navigate(['/main']);
     }
-    console.info('navigateto: ', this.navigateTo)
   }
 
 }
