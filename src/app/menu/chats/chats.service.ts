@@ -48,19 +48,16 @@ export class ChatsService {
         senderId: id,
         text: message,
         time: sendTime,
-      }))
+      })),
+      concatMap(() => updateDoc(chatReference, {})),
     );
-  }
-
-  test(uid: string) {
-    return (this.aFirestore.firestore.doc(`users/${uid}`).get())
   }
 
   chatTile(id: string, chatsList: ChatWindow[]): ChatWindow[] {
     chatsList.forEach((chat) => {
       const index = chat.userIds.indexOf(id ?? '') === 0 ? 1 : 0; //kto wysyłał wiadomość
-      const uid = chat.userIds[index];
-      chat.name = uid; //TODO: zmiana uid na name przy pobieraniu fieldów z dokumentu oraz dodanie obrazka tak samo
+      const name = chat.userIds[index];
+      chat.name = name; //TODO: zmiana uid na name przy pobieraniu fieldów z dokumentu oraz dodanie obrazka tak samo
     });
     return chatsList;
   }
@@ -79,10 +76,7 @@ export class ChatsService {
   startChat(partner: User): Observable<string> {
     const reference = collection(this.firestore, 'chatChannels');
     return this.userService.currentUserProfile$.pipe(
-      take(1), concatMap((user) => addDoc(reference, { userIds: [user?.uid, partner?.uid], users: [
-        { name: user?.name ?? ''}, //TODO: photo do dodania
-        { name: partner.name ?? ''},
-      ]})),
+      take(1), concatMap((user) => addDoc(reference, {userIds: [user?.uid, partner?.uid]})),
       map(reference => reference.id)
     );
   }

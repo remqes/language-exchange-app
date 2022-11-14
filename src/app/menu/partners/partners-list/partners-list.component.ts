@@ -16,6 +16,8 @@ export class PartnersListComponent implements OnInit {
   constructor(private userService: UserService) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.users$.subscribe((user) => console.info(user))
+  }
 
 }

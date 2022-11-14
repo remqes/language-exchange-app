@@ -31,7 +31,7 @@ export class ChatListComponent implements OnInit {
   user$ = this.userService.currentUserProfile$;
   users$ = combineLatest([this.userService.users$, this.user$, this.searchControl.valueChanges.pipe(startWith(''))]).pipe(
       map(([ allUsers, currentUser, searchedUser ]) => allUsers.filter((user) =>
-                user.name?.toLowerCase().includes(searchedUser.toLowerCase()) && user.name !== currentUser?.name))
+                user.name?.toLowerCase().includes(searchedUser.toLowerCase()) && user.uid !== currentUser?.uid))
     );
 
   constructor(private userService: UserService, private chatService: ChatsService) { }
@@ -55,6 +55,7 @@ export class ChatListComponent implements OnInit {
   send() {
     const message = this.sendMessageControl.value;
     const chatId = this.chatHeaderControl.value[0];
+    console.info(message, chatId)
     if (message && chatId) {
       this.chatService.addMessage(chatId, message, this.userUID).subscribe(() => {
         this.scrollBottom();
@@ -64,6 +65,7 @@ export class ChatListComponent implements OnInit {
   }
 
   startChat(user: User) {
+    console.info('user: ', user)
     this.chatService.isChatExist(user.uid).pipe(
       switchMap(id => {
         if (id) {

@@ -35,7 +35,7 @@ export class UserService {
 
   addUser(user: User): Observable<void> {
     const reference = doc(this.firestore, 'users', user.uid);
-    return from(setDoc(reference, {}));
+    return from(setDoc(reference, { uid: user.uid }));
   }
 
   updatePicture(profileData: Partial<UserInfo>): Observable<any> {
@@ -50,6 +50,6 @@ export class UserService {
 
   updateUser(user: User, userUID: string): Observable<void> {
     const reference = doc(this.firestore, 'users', userUID);
-    return from(updateDoc(reference, { bio: user.bio, name: user.name, profilePicturePath: user.profilePicturePath }));
+    return from(updateDoc(reference, { uid: userUID, bio: user.bio, name: user.name, profilePicturePath: user.profilePicturePath }));
   }
 }
