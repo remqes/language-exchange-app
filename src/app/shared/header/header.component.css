@@ -38,9 +38,9 @@
 .nav-bar ul{
   list-style: none;
   display: inline-grid;
-  grid-template-columns: 7.5rem 7.5rem 7.5rem 1fr 0.5fr;
+  grid-template-columns: 6.95rem 6.95rem 6.95rem 6.95rem 6.95rem 6.95rem;
   align-items: center;
-  width: 1100px;
+  width: 42rem;
   padding-left: 1rem;
   padding-right: 1rem;
 }

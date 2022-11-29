@@ -2,23 +2,27 @@
   <div class="users-list mat-elevation-z5">
     <div class="input">
       <mat-form-field>
-        <input matInput [formControl]="searchControl" [matAutocomplete]="users">
+        <input matInput [formControl]="searchControl" class="search-input" placeholder="Search users..." [matAutocomplete]="users">
       </mat-form-field>
       <mat-autocomplete #users="matAutocomplete">
         <mat-option *ngFor="let user of users$ | async" (click)="startChat(user)">
           {{ user.name }}
         </mat-option>
       </mat-autocomplete>
+      <mat-divider></mat-divider>
     </div>
     <mat-selection-list [multiple]="false" [formControl]="chatHeaderControl">
-      <mat-divider></mat-divider>
+
       <mat-list-option *ngFor="let chat of chats$ | async" [value]="chat.id">
         <img matListAvatar [src]="chat.picture ? chat.picture : 'assets/kapitanjaszczurka.jpg'" />
         <div mat-line class="message">
           <p mat-line class="title">
-            <span class="spanname">{{ chat.name }}</span>
+            <span class="spanname">{{ chat.name }}</span></p>
+          <p mat-line class="subtitle">
+            <span class="spanbio">{{ chat.bio }}</span>
+        </p>
         </div>
-        <mat-divider></mat-divider>
+        <mat-divider [vertical]="true"></mat-divider>
       </mat-list-option>
     </mat-selection-list>
   </div>
@@ -28,9 +32,6 @@
       <p>{{ choosed.name }}</p>
     </div>
     <ng-template #noMessages>
-      <div class="nomessages">
-        <p mat-line class="no-messages-written">No written messages yet!</p>
-      </div>
     </ng-template>
     <mat-divider></mat-divider>
     <div class="chat">
@@ -47,8 +48,8 @@
         <div #chatEnd></div>
       </ng-container>
     </div>
-    <div class="input" *ngIf="choosedChat$ | async">
-      <mat-form-field>
+    <div class="inputmessage" *ngIf="choosedChat$ | async">
+      <mat-form-field class="formfieldmessage" >
         <input matInput [formControl]="sendMessageControl" (keydown.enter)="send()">
         <button class="send-button" mat-icon-button matSuffix (click)="send()"><mat-icon>send</mat-icon></button>
       </mat-form-field>

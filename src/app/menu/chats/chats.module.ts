@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { ShowDatePipe } from 'src/app/pipe/date.pipe';
 import { DatePipe } from '@angular/common';
+import { ScorePipe } from 'src/app/pipe/score.pipe';
 
 @NgModule({
   declarations: [

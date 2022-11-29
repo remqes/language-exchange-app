@@ -1,7 +1,6 @@
 .container {
   display: flex;
-  height: 85vh;
-  color: red;
+  height: 87.5vh;
 }
 
 span {
@@ -9,35 +8,60 @@ span {
 }
 
 .users-list {
-  width: 40%;
+  width: 32.5%;
   margin: 16px;
-  border: 1px red solid;
+  background-color: white;
 }
 
 .messages-list {
-  width: 60%;
+  width: 67.5%;
   margin: 16px;
-  border: 1px red solid;
+  display: flex;
+  flex-direction: column;
 }
 
 .spanname {
   font-weight: 500;
+  font-size: large;
+}
+
+.spanbio {
+  font-weight: 200;
+  font-size: small;
 }
 
 .input {
   margin-left: 2rem;
+  margin-top: 0.5rem;
+}
+
+.inputmessage > .mat-form-field {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1rem;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .message {
   display: flex;
   flex-direction: row;
-
-  border: 1px solid red;
+  font-family: 'Quicksand';
 }
 
 .message > .title {
   justify-content: right;
-  font-family: 'Times New Roman', Times, serif;
+  margin-bottom: 0;
+}
+
+.message > .subtitle {
+  justify-content: right;
+}
+
+.spanbio {
+  margin-top: 1em;
 }
 
 .spandate {
@@ -52,7 +76,8 @@ span {
 
 .header {
   display: flex;
-  padding: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
 }
 
 .header > p {
@@ -62,11 +87,17 @@ span {
 }
 
 .messages-list > .chat {
-  height: 90%;
+  height: 100%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   overflow: auto;
+  font-family: 'Quicksand';
+}
+
+.nomessages {
+  display: grid;
+  justify-content: center;
 }
 
 .chat > :first-child {
@@ -84,22 +115,27 @@ span {
 }
 
 .message-text {
-  padding-top: 8px;
+  padding-top: 0.3rem;
   padding-bottom: 18px;
   padding-left: 8px;
   padding-right: 100px;
   margin-bottom: 16px;
   width: fit-content;
-  background-color: aqua;
+  overflow: auto;
+  background-color: rgba(255, 198, 11, 0.37);
+  border-radius: 20px 20px 20px 20px;
   position: relative;
 }
+/*
+  lewy-górny, prawy-górny
+*/
 
 .message-text > .message-date {
   position: absolute;
-  padding: 1rem;
+  padding: 0.7rem;
   bottom: 2px;
   top: 8px;
-  font-size: 0.7rem;
+  font-size: 0.5rem;
 }
 
 .message-text.userField > .message-date {
@@ -119,7 +155,7 @@ span {
 
 .send-button {
   background-color: transparent;
-  color: red;
+  color: #edb2007c;
   border: none;
 }
 
@@ -149,4 +185,27 @@ span {
 
 ::ng-deep.mat-focused {
   color: #31528c !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7.5px;
+  height: 7.5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #31528c;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #31528c;
 }

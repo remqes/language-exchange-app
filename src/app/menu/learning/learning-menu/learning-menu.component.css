@@ -1,0 +1,64 @@
+
+
+.container {
+  width: 100%;
+  font-family: 'Quicksand';
+
+  padding-top: 2.25em;
+  display: grid;
+  margin: auto;
+  justify-content: space-around;
+}
+
+.exercises {
+  border: 1px solid gray;
+  padding: 0.75em 1.5em 0.75em 1.5em;
+  border-radius: 16px;
+  margin-bottom: 2em;
+}
+
+.games {
+  border: 1px solid gray;
+  padding: 0.75em 1.5em 0.75em 1.5em;
+  border-radius: 16px;
+  margin-bottom: 2em;
+}
+
+.exercises-title {
+  justify-content: center;
+}
+
+.buttons {
+  margin-top: 1.25em;
+}
+
+.learning-button {
+  width: 10em;
+  height: 16em;
+  margin: 1rem 1rem 1rem 1rem;
+  background-color: #edb300;
+  color: white;
+  border: none;
+  border-radius: 16px;
+}
+
+.learning-button:hover {
+  transform: scale(1.05, 1.05);
+}
+
+.button-container {
+  display: grid;
+  justify-content: center;
+}
+
+.button-container img {
+  width: 7em;
+  height: 7em;
+  margin-bottom: 2em;
+}
+
+
+.exercises-title {
+  margin-bottom: 4rem;
+  justify-content: center;
+}

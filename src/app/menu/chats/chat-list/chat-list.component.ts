@@ -55,7 +55,6 @@ export class ChatListComponent implements OnInit {
   send() {
     const message = this.sendMessageControl.value;
     const chatId = this.chatHeaderControl.value[0];
-    console.info(message, chatId)
     if (message && chatId) {
       this.chatService.addMessage(chatId, message, this.userUID).subscribe(() => {
         this.scrollBottom();
@@ -65,7 +64,6 @@ export class ChatListComponent implements OnInit {
   }
 
   startChat(user: User) {
-    console.info('user: ', user)
     this.chatService.isChatExist(user.uid).pipe(
       switchMap(id => {
         if (id) {

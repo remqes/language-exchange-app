@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="nav-bar">
+    <ul>
+      <li>
+        <button type="button" class="nav-link menu-button" mat-raised-button (click)="startWebCam()">Start webcam</button>
+      </li>
+      <li>
+        <button type="button" class="nav-link menu-button" mat-raised-button>Stop webcam</button>
+      </li>
+      <li>
+        <button type="button" class="nav-link menu-button" mat-raised-button (click)="createCall()">Create call</button>
+      </li>
+      <li>
+        <button type="button" class="nav-link menu-button" mat-raised-button>Join call</button>
+      </li>
+      <li>
+        <button type="button" class="nav-link menu-button" mat-raised-button (click)="answerCall()">Answer</button>
+      </li>
+      <li>
+        <button type="button" class="nav-link menu-button" mat-raised-button>Hangup</button>
+      </li>
+    </ul>
+  </div>
+  <div class="callid">
+      <mat-form-field class="example-form-field" #code>
+        <input matInput type="text" >
+        <button matSuffix mat-icon-button >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+  </div>
+  <div class="video">
+    <div class="localVideo">
+      <span>
+        Your's webcam
+      </span>
+      <div class="videoImage">
+        <video autoplay playsinline id="webcamVideo" #userWebcam></video>
+      </div>
+    </div>
+    <div class="remoteVideo">
+      <span>
+        Partrner's webcam
+      </span>
+      <div class="videoImage">
+        <video autoplay playsinline id="remoteVideo" #partnerWebcam></video>
+      </div>
+    </div>
+  </div>
+</div>

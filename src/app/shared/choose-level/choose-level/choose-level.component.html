@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="options">
+    <div class="input">
+      <mat-form-field appearance="fill" color="info">
+        <mat-label>Choose language</mat-label>
+        <mat-select disableRipple [(ngModel)]="selectedLanguage">
+          <mat-option *ngFor="let language of languages" [value]="language.value">
+            {{ language.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input">
+      <mat-form-field appearance="fill" color="info">
+        <mat-label>Choose a topic</mat-label>
+        <mat-select disableRipple [(ngModel)]="selectedCategory">
+          <mat-option *ngFor="let category of categories" [value]="category.value">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input">
+      <mat-form-field appearance="fill" color="info">
+        <mat-label>Choose a difficulty level</mat-label>
+        <mat-select disableRipple [(ngModel)]="selectedLevel">
+          <mat-option *ngFor="let level of levels" [value]="level.value">
+            {{ level.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="confirm">
+    <button mat-raised-button type="button" class="confirm-button" (click)="confirm()"
+    [disabled]="!selectedLanguage || !selectedCategory || !selectedLevel">Confirm</button>
+  </div>
+</div>

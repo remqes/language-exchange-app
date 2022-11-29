@@ -10,3 +10,6 @@ export const environment  = {
   },
   production: false
 };
+
+// export const ENDPOINTURL = 'https://jezykowy-zawrot-glowy.herokuapp.com/api/users?';
+export const ENDPOINTURL = 'localhost:8080/api/users?';

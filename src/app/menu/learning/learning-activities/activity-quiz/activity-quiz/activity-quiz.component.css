@@ -1,0 +1,10 @@
+.container {
+  font-family: 'Quicksand';
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.container span {
+  text-align: center;
+}

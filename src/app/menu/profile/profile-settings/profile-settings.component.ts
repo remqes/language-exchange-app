@@ -19,6 +19,7 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
   user$ = this.userService.currentUserProfile$;
   uid: string;
   private subscription: Subscription;
+  userScore: number;
 
   profileSettingsForm = new FormGroup({
     name: new FormControl(''),
@@ -47,6 +48,8 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
       this.profileSettingsForm.patchValue({ ...user });
     },
     err => console.error('err: ', err));
+
+    this.user$.subscribe((data => this.userScore = data?.score !== undefined ? data.score : 0))
   }
 
   ngOnDestroy(): void {
@@ -55,8 +58,8 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
 
   save() {
     const { ...data} = this.profileSettingsForm.value;
-    this.userService.updateUser({ ...data }, this.userUID);
-    this.router.navigate(['/profile'])
+    this.userService.updateUser({ ...data, score: this.userScore }, this.userUID);
+    this.router.navigate(['/profile']);
   }
 
 }

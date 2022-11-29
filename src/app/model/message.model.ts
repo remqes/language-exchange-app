@@ -6,6 +6,7 @@ export interface ChatWindow {
   userIds: string[];
   picture?: string;
   name?: string;
+  bio?: string;
 }
 
 export interface Message {

@@ -1,0 +1,66 @@
+.menu-button {
+  font-size: 85%;
+  background-color: white;
+  color: #31528c;
+  border: 1px solid #31528c;
+  width: 6.5rem;
+}
+
+.menu-button:hover {
+  transform: scale(1.05, 1.05);
+}
+
+li {
+  list-style: none;
+}
+
+video {
+  border: 1px solid lightslategrey;
+}
+
+.nav-bar {
+  margin-top: 1rem;
+  margin-left: -0.5rem;
+}
+
+.nav-bar ul{
+  list-style: none;
+  display: inline-grid;
+  grid-template-columns: 6.95rem 6.95rem 6.95rem 6.95rem 6.95rem 6.95rem;
+  align-items: center;
+  width: 42rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.callid mat-form-field {
+  font-family: 'Quicksand';
+}
+
+/* input placeholder color  */
+::ng-deep .mat-form-field-label {
+  color: gray !important;
+}
+
+/* input underline before edit color  */
+::ng-deep .mat-form-field-underline{
+  background-color: black !important;
+}
+
+/* input underline after edit color  */
+::ng-deep.mat-form-field-ripple {
+  background-color: black !important;
+}
+
+/* input required marker color */
+::ng-deep.mat-form-field-required-marker {
+  color: gray !important;
+}
+
+::ng-deep.mat-error {
+  color: gray !important;
+}

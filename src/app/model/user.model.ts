@@ -3,4 +3,5 @@ export interface User {
   name?: string;
   bio?: string;
   profilePicturePath?: string;
+  score?: number;
 }

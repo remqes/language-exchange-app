@@ -2,7 +2,7 @@ import { UserService } from './../profile/profile-settings/user.service';
 import { User } from './../../model/user.model';
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData } from '@angular/fire/firestore';
-import { concatMap, Observable, take, map } from 'rxjs';
+import { combineLatest, concatMap, Observable, take, map } from 'rxjs';
 import { addDoc, collection, doc, query, Timestamp, where, updateDoc, orderBy } from 'firebase/firestore';
 import { ChatWindow, Message } from 'src/app/model/message.model';
 import firebase from 'firebase/compat/app';
@@ -13,6 +13,12 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 })
 export class ChatsService {
   userUID: string;
+  username: string;
+
+  user$ = this.userService.currentUserProfile$;
+  users$ = combineLatest([this.userService.users$, this.user$]).pipe(
+    map(([ allUsers, currentUser ]) => allUsers.filter((user) => user.name !== currentUser?.name))
+  );
 
   get chatsList$(): Observable<ChatWindow[]> {
     firebase.auth().onAuthStateChanged((user) => {
@@ -49,15 +55,27 @@ export class ChatsService {
         text: message,
         time: sendTime,
       })),
-      concatMap(() => updateDoc(chatReference, {})),
+      concatMap(() => updateDoc(chatReference, {
+        toReadBy: '',
+      })),
     );
   }
 
   chatTile(id: string, chatsList: ChatWindow[]): ChatWindow[] {
     chatsList.forEach((chat) => {
       const index = chat.userIds.indexOf(id ?? '') === 0 ? 1 : 0; //kto wysyłał wiadomość
-      const name = chat.userIds[index];
-      chat.name = name; //TODO: zmiana uid na name przy pobieraniu fieldów z dokumentu oraz dodanie obrazka tak samo
+      // console.info('chatuserids: ', chat.userIds[index]) //uid usera
+      let name = chat.userIds[index];
+      let checkUser: any;
+      this.users$.subscribe((data) => {
+        checkUser = data;
+        checkUser.forEach((element) => {
+          if (element.uid == name) {
+            chat.name = element.name;
+            chat.bio = element.bio;
+          }
+        });
+      });
     });
     return chatsList;
   }

@@ -49,7 +49,15 @@ export class UserService {
   }
 
   updateUser(user: User, userUID: string): Observable<void> {
+    console.info('user: ', user)
+    let score = user.score !== undefined ? user.score : 0;
     const reference = doc(this.firestore, 'users', userUID);
-    return from(updateDoc(reference, { uid: userUID, bio: user.bio, name: user.name, profilePicturePath: user.profilePicturePath }));
+    return from(updateDoc(reference, { uid: userUID, bio: user.bio, name: user.name, profilePicturePath: user.profilePicturePath, score: score }));
+  }
+
+  updateScore(user: User, score: number) {
+    const reference = doc(this.firestore, 'users', user.uid);
+    let newScore = user.score !== undefined ? user.score + score : score;
+    return from(updateDoc(reference, { uid: user.uid, bio: user.bio, name: user.name, profilePicturePath: user.profilePicturePath, score: newScore }));
   }
 }
