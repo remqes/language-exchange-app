@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { PartnerComponent } from './partner/partner.component';
 import { MatCardModule } from '@angular/material/card';
 import { ScorePipe } from 'src/app/pipe/score.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ScorePipe } from 'src/app/pipe/score.pipe';
     CommonModule,
     PartnersRoutingModule,
     MatCardModule,
+    HttpClientModule,
   ],
   providers: [ScorePipe],
 })

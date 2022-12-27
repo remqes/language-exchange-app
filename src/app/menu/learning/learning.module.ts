@@ -23,6 +23,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ScoreDialogComponent } from './score-dialog/score-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MemoCardComponent } from './learning-activities/activity-memo/memo-card/memo-card.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { MatSortModule } from '@angular/material/sort';
     MemoViewComponent,
     QuizViewComponent,
     ScoreDialogComponent,
+    MemoCardComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +57,8 @@ import { MatSortModule } from '@angular/material/sort';
     ReactiveFormsModule,
     MatDialogModule,
     MatSortModule,
+    DragDropModule,
+    MatToolbarModule,
   ]
 })
 export class LearningModule { }

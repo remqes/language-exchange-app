@@ -1,1 +1,30 @@
-<p>gaps-view works!</p>
+<div class="container">
+  <div class="text">
+    <ng-container > {{ text }} </ng-container>
+  </div>
+  <div class="answers">
+    <div class="answer">
+      answer1
+      <mat-select [(value)]="userAnswers[0]">
+        <mat-option *ngFor="let answer of answers" value="{{ answer }}" >{{ answer }}</mat-option>
+      </mat-select>
+    </div>
+    <div class="answer">
+      answer2
+      <mat-select [(value)]="userAnswers[1]">
+        <mat-option *ngFor="let answer of answers" value="{{ answer }}">{{ answer }}</mat-option>
+      </mat-select>
+    </div>
+    <div class="answer">
+      answer3
+      <mat-select [(value)]="userAnswers[2]">
+        <mat-option *ngFor="let answer of answers" value="{{ answer }}">{{ answer }}</mat-option>
+      </mat-select>
+    </div>
+    <div class="confirm">
+      <button mat-raised-button type="button" class="confirm-button" (click)="confirm()"
+      [disabled]="userAnswers[0] === undefined || userAnswers[1] === undefined ||
+      userAnswers[2] === undefined">Confirm</button>
+    </div>
+  </div>
+</div>

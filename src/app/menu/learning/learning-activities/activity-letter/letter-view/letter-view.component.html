@@ -1,1 +1,24 @@
-<p>letter-view works!</p>
+<div class="container">
+    <div class="task-header">
+
+    </div>
+    <div class="taks-content" *ngFor="let unscramble of fetchData$ | async; let i = index">
+        <div *ngIf="i === actualIndex">
+            <div class="card" >
+                {{ displayedWord }}
+            </div>
+                <div
+                    cdkDropList
+                    cdkDropListOrientation="horizontal"
+                    [cdkDropListData]="answerWord"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let item of answerWord" cdkDrag>{{item}}</div>
+                </div>
+            <div class="buttons">
+                <button mat-button color="primary" (click)="moveNext()">Skip</button>
+                <button mat-raised-button color="primary" (click)="checkAnswer()">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

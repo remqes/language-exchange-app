@@ -1,0 +1,9 @@
+
+<div class="card" (click)="choosedCard.emit()" [@cardFlip]="data.state">
+  <div class="back">
+      <img src="assets/logo-png.png">
+  </div>
+  <div class="front">
+      <img [src]="data.image">
+  </div>
+</div>

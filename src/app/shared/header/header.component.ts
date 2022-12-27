@@ -16,7 +16,7 @@ export class HeaderComponent implements DoCheck, OnInit {
 
   constructor(private auth: AuthService, private afAuth: AngularFireAuth, private router: Router, private userService: UserService) {
     this.user$.subscribe((user) => {
-      user ? this.username = user.name! : ""
+      user ? this.username = user.uid! : ""
     });
   }
 

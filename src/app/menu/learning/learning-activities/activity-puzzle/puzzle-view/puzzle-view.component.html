@@ -1,1 +1,74 @@
-<p>puzzle-view works!</p>
+<div class="container">
+  <form [formGroup]="dataForm">
+    <div class="container-tile" *ngIf="respond1">
+      <div class="field mat-elevation-z8">
+        <div class="question">
+          {{ respond1.question }}
+        </div>
+        <div class="answers">
+          <mat-radio-group formControlName="getAnswer1" class="answers">
+            <mat-radio-button class="answer" id="respond1answer1" [value]="respond1.answer1">
+              {{ respond1.answer1 }}
+            </mat-radio-button>
+            <mat-radio-button class="answer" id="respond1answer2" [value]="respond1.answer2">
+              {{ respond1.answer2 }}
+            </mat-radio-button>
+            <mat-radio-button class="answer" id="respond1answer3" [value]="respond1.answer3">
+              {{ respond1.answer3 }}
+            </mat-radio-button>
+          </mat-radio-group>
+
+        </div>
+      </div>
+    </div>
+    <div class="container-tile" *ngIf="respond2">
+      <div class="field mat-elevation-z8">
+        <div class="question">
+          {{ respond2.question }}
+        </div>
+        <div class="answers">
+          <mat-radio-group formControlName="getAnswer2" class="answers">
+            <mat-radio-button class="answer" [value]="respond2.answer1">
+              {{ respond2.answer1 }}
+            </mat-radio-button>
+            <mat-radio-button class="answer" [value]="respond2.answer2">
+              {{ respond2.answer2 }}
+            </mat-radio-button>
+            <mat-radio-button class="answer" [value]="respond2.answer3">
+              {{ respond2.answer3 }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+    <div class="container-tile" *ngIf="respond3">
+      <div class="field mat-elevation-z8">
+        <div class="question">
+          {{ respond3.question }}
+        </div>
+        <div class="answers">
+          <mat-radio-group formControlName="getAnswer3" class="answers">
+            <mat-radio-button class="answer" [value]="respond3.answer1">
+              {{ respond3.answer1 }}
+            </mat-radio-button>
+            <mat-radio-button class="answer" [value]="respond3.answer2">
+              {{ respond3.answer2 }}
+            </mat-radio-button>
+            <mat-radio-button class="answer" [value]="respond3.answer3">
+              {{ respond3.answer3 }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+    <div class="confirm">
+      <button mat-raised-button type="button" class="confirm-button" (click)="confirm()"
+      [disabled]="getAnswer1?.value === null || getAnswer2?.value === null ||
+      getAnswer3?.value === null">Confirm</button>
+    </div>
+  </form>
+</div>
+
+<ng-template #notloaded>
+  Cannot load data
+</ng-template>

@@ -1,3 +1,4 @@
+import { AuthService } from './../menu/auth/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
@@ -21,7 +22,7 @@ export class AuthGuard implements CanActivate {
         this.isAuthenticated = user ? true : false;
       }
       if (!this.isAuthenticated) {
-        this.router.navigate(['/not-found']);
+        this.router.navigate(['/main']);
       }
       return this.isAuthenticated;
   }

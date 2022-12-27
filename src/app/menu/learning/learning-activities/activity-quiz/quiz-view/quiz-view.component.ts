@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -15,9 +15,10 @@ import { ScoreDialogComponent } from '../../../score-dialog/score-dialog.compone
   templateUrl: './quiz-view.component.html',
   styleUrls: ['./quiz-view.component.css']
 })
-export class QuizViewComponent implements OnInit {
+export class QuizViewComponent implements OnInit, OnDestroy {
   score: number = 0;
   showScore: boolean = false;
+  subscription: Subscription;
 
   correctAnswer1: string;
   correctAnswer2: string;
@@ -53,18 +54,22 @@ export class QuizViewComponent implements OnInit {
     private http: HttpClient,
     private dialog: MatDialog) {
       this.dataForm.valueChanges.subscribe((data) => {
-        console.info('data: ', data);
         console.info(this.getAnswer1?.value !== null, this.getAnswer2?.value !== null,
           this.getAnswer3?.value !== null)
       });
-    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     if (!this.learningService.queryParams) {
       this.router.navigate(['learning/menu']);
     } else {
       this.fetchdata$ = this.fetchData();
-      this.fetchdata$.subscribe((data) => {
+      this.subscription = this.fetchdata$.subscribe((data) => {
+        console.info('data:', data)
         this.correctAnswer1 = data[0].correctAnswer;
         this.correctAnswer2 = data[1].correctAnswer;
         this.correctAnswer3 = data[2].correctAnswer;
@@ -100,7 +105,7 @@ export class QuizViewComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe((_) => {
         this.router.navigate(['/learning/menu']);
-      })
+      });
     }
   }
 

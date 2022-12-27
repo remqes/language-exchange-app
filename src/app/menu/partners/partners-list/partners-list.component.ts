@@ -1,42 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { combineLatest, map } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
+import { UserService } from './../../profile/profile-settings/user.service';
+import { ChatsService } from './../../chats/chats.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/model/user.model';
-import { UserService } from '../../profile/profile-settings/user.service';
-import { Sort } from '@angular/material/sort';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-partners-list',
   templateUrl: './partners-list.component.html',
   styleUrls: ['./partners-list.component.css']
 })
-export class PartnersListComponent implements OnInit {
-  user$ = this.userService.currentUserProfile$;
-  users$ = combineLatest([this.userService.users$, this.user$]).pipe(
-      map(([ allUsers, currentUser ]) => allUsers.filter((user) => user.name !== currentUser?.name))
-    );
-  usersSorted: User[];
+export class PartnersListComponent implements OnInit, OnDestroy {
 
-  constructor(private userService: UserService) {
+  constructor(public userService: UserService, private storage: AngularFireStorage) { }
 
-  }
+  users$: Observable<User[]>;
+  user$: Observable<any>;
+  actualUserUID: string;
+  userIcon: string;
+  users: Subscription;
+  user: Subscription;
+  index = 0;
+  sortedArray: Array<User>;
 
   ngOnInit(): void {
-    this.users$.subscribe((user) => {
-      this.usersSorted = user.slice();
-      this.sortUsers();
-    });
+    this.users$ = this.userService.users$;
+    this.user$ = this.userService.currentUser$;
+    this.users = this.users$.pipe(
+      map(data => data.map(item => item.score ? item : {...item, score: 0})),
+      map(data => data.sort((a, b) => b.score! - a.score!)))
+      .subscribe(data => {
+        this.sortedArray = data;
+        this.sortedArray.forEach(async (user) => {
+          if (user.profilePicturePath) {
+            const reference = this.storage.ref(`${user.profilePicturePath}`);
+            user.displayedPicture = await reference.getDownloadURL().toPromise();
+          }
+        })
+      })
   }
 
-  sortUsers() {
-    this.usersSorted = this.usersSorted.sort((userA, userB) => {
-      const userAScore = userA.score !== undefined ? userA.score : 0;
-      const userBScore = userB.score !== undefined ? userB.score : 0;
-      return compare(userAScore, userBScore, false);
-    })
+  ngOnDestroy(): void {
+      this.users.unsubscribe();
   }
-
-}
-
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

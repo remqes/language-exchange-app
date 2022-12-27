@@ -1,1 +1,28 @@
-<p>flashcards-view works!</p>
+<div class="container">
+    <div class="task-header">
+        {{ score }}
+        {{ actualIndex + 1 }} / 10
+    </div>
+    <div class="task-content" *ngFor="let flashcard of fetchData$ | async; let i = index">
+        <div *ngIf="i === actualIndex">
+            <div class="card" [formGroup]="answerForm">
+                {{ flashcard.name }}
+                <input matInput formControlName="answer">
+                <mat-error *ngIf="isWrong">Try again</mat-error>
+            </div>
+            <div class="hint1" *ngIf="showHint1">
+                {{ flashcard.hint }}
+            </div>
+            <div class="hint2" *ngIf="showHint2">
+                {{ flashcard.image }}
+                <!-- <img mat-card-image class="hintimage" [src]="flashcard.image" alt=""> -->
+            </div>
+            <div class="buttons">
+                <button mat-button color="primary" (click)="showHint()">{{ hintName }}</button>
+                <button *ngIf="goNextButton" mat-raised-button color="primary" (click)="checkAnswer()">{{ buttonName }}</button>
+                <button *ngIf="!goNextButton" mat-raised-button color="primary" (click)="saveAnswers()">Save score</button>
+            </div>
+        </div>
+
+    </div>
+</div>

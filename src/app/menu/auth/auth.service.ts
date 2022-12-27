@@ -11,6 +11,7 @@ import { UserService } from '../profile/profile-settings/user.service';
 })
 export class AuthService {
   currentUser$ = authState(this.auth);
+  isLogged: boolean = false;
 
   constructor(
     private auth: Auth,
