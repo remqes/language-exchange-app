@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Quicksand';
+  justify-content: center;
+  width: 100%;
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  font-family: 'Quicksand';
+  padding: 0.8rem;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.25rem;
+}
+
+.flashcard-text {
+  text-align: center;
+  font-size: large;
+  margin: 2rem;
+}
+
+input {
+  width: 70%;
+  display: block;
+  margin: 0 auto;
+  padding: 1.25rem;
+  height: 1.25rem;
+  margin-bottom: 0.4rem;
+}
+
+.answer-error {
+  color: #4472c4;
+}
+
+.confirm-button {
+  margin-top: 1em;
+  width: 8rem;
+  background-color: #c49504;
+  color: white;
+  font-family: 'Quicksand';
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin: 1.25rem;
+}
+
+.hints {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hint {
+  margin: 0.65rem;
+}
+
+.hint-button {
+  margin-top: 1em;
+  width: 8rem;
+  color: #c49504;
+  font-family: 'Quicksand';
+}
+
+.display-hint {
+  font-size: medium;
+  margin: 0.75rem;
+}
+
+.hintimage {
+  width: 14.5rem;
+  height: 11.5rem;
+  align-items: center;
+}

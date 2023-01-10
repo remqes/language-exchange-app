@@ -105,20 +105,20 @@ h1 {
 }
 
 /* input underline after edit color  */
-::ng-deep.mat-form-field-ripple {
+::ng-deep .mat-form-field-ripple {
   background-color: #31528c !important;
 }
 
 /* input required marker color */
-::ng-deep.mat-form-field-required-marker {
+::ng-deep .mat-form-field-required-marker {
   color: #4472c4 !important;
 }
 
-::ng-deep.mat-error {
+.mat-error {
   color: #4472c4 !important;
 }
 
-::ng-deep.mat-focused {
+::ng-deep .mat-focused {
   color: #31528c !important;
 }
 

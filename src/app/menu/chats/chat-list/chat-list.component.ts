@@ -1,29 +1,53 @@
+import { ChatsService } from './../chats.service';
+import { ChatWindow } from 'src/app/model/message.model';
 import { User } from './../../../model/user.model';
 import { UserService } from './../../profile/profile-settings/user.service';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { combineLatest, concatMap, first, map, of, startWith, switchMap, tap } from 'rxjs';
-import { ChatsService } from '../chats.service';
+import { combineLatest, map, of, startWith, Subscription, switchMap, tap } from 'rxjs';
 import firebase from 'firebase/compat/app';
-import { Firestore } from '@angular/fire/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatReportDialogComponent } from '../chat-report-dialog/chat-report-dialog.component';
+
+interface ChatList {
+  chatId: string;
+  toReadBy: string;
+  userId: string;
+  name: string;
+  bio: string;
+  picturePath?: string;
+}
 
 @Component({
   selector: 'app-chat-list',
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.css']
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent implements OnDestroy, OnInit {
   @ViewChild('chatEnd') chatEnd: ElementRef;
   chatHeaderControl = new FormControl('');
   sendMessageControl = new FormControl('');
   searchControl = new FormControl('');
   userUID: string;
-  userData: Array<User> = [];
+  chatData: Array<ChatList> = [];
+  chatWindow: Array<ChatWindow> = [];
   chats$ = this.chatService.chatsList$;
+  chat: Subscription;
+  chatIndex: number = 0;
+  receiveMessage: boolean = false;
+  feedback: string;
+  secondUID: string;
+  toReadByValue: string = '';
+
   choosedChat$ = combineLatest([this.chatHeaderControl.valueChanges, this.chats$]).pipe(
-    map(([value, chats]) => chats.find(chat => chat.id === value[0])) //wybrany chat
+    map(([value, chats]) => chats.find(chat => chat.id === value[0])), //wybrany chat
+    tap(() => {
+      setTimeout(() => {
+        this.receiveMessage = false;
+      }, 5000);
+    })
   );
   getMessages$ = this.chatHeaderControl.valueChanges.pipe(
     map(value => value[0]),
@@ -38,12 +62,20 @@ export class ChatListComponent implements OnInit {
                 user.name?.toLowerCase().includes(searchedUser.toLowerCase()) && user.uid !== currentUser?.uid))
     );
 
+    chatTxt: Array<ChatList> = [];
+  router: any;
+
   constructor(
     private userService: UserService,
     private firestore: AngularFirestore,
     private chatService: ChatsService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private dialog: MatDialog
     ) { }
+
+    ngOnDestroy(): void {
+        // this.chat.unsubscribe();
+    }
 
   ngOnInit(): void {
     firebase.auth().onAuthStateChanged((user) => {
@@ -53,35 +85,53 @@ export class ChatListComponent implements OnInit {
         console.error('not logged')
       }});
 
-      // this.chats$.pipe(
-    // map(data => data.map(data => data.userIds.filter(data => data !== this.userUID))))
-      //   .subscribe(data => {
-      //     const usersId = data.flat();
-      //     usersId.forEach(id => {
-      //       this.userData.push(this.firestore.collection('users').doc(id).get())
-      //     });
-      //     console.info()
-      //   });
-    this.chats$.pipe(
-      map(data => data.map(data => data.userIds.filter(data => data !== this.userUID))), //[['id1'], ['id2'], ['id3']]
-      concatMap(data => data.flat()), //'id1', 'id2', 'id3'
-      concatMap(id => this.firestore.collection('users').doc(id).ref.get())
-    ).subscribe( async (userData) => {
-      let pictureURL: string;
-      await this.storage.ref(`${userData.get('profilePicturePath')}`).getDownloadURL().subscribe(url => {
-        this.userData.push({
-          uid: userData.get('uid'),
-          name: userData.get('name'),
-          bio: userData.get('bio'),
-          profilePicturePath: url,
-          score: userData.get('score'),
+    this.chats$ = this.chats$.pipe(
+      map(data => {
+        const idsArray = data.map(data => data.userIds.filter(data => data !== this.userUID)).flat();
+        this.secondUID = idsArray[0];
+        idsArray.forEach(id => {
+          let match: boolean = false;
+          let index = 0;
+          while (!match && index < idsArray.length) {
+            if (idsArray[index] === id) {
+              match = !match;
+              this.firestore.collection('users').doc(id).ref.get().then(reference => {
+                this.storage.ref(`${reference.get('profilePicturePath')}`).getDownloadURL().subscribe(image => {
+                  if (image) {
+                    data[index].picture = image;
+                  }
+                });
+              });
+            } else {
+              index++;
+            }
+          }
+          data.map(data => this.toReadByValue = data.toReadBy!)
+          if (this.userUID === this.toReadByValue) {
+            this.receiveMessage = true;
+
+          }
         });
-      });
+        this.chatIndex = 0;
+        return data;
+      })
+    );
 
-
-    });
-        //TODO: to zwraca tablice z id userów, pobrac dane z tych id, następnie
-        // stworzyc to samo co w partners-list, czyli pobranie obrazów
+    this.choosedChat$ = this.choosedChat$.pipe(
+      map(data => {
+        if (data) {
+          const idsArray = data.userIds.filter(data => data !== this.userUID);
+          this.firestore.collection('users').doc(idsArray[0]).ref.get().then(reference => {
+            this.storage.ref(`${reference.get('profilePicturePath')}`).getDownloadURL().subscribe(image => {
+              if (image) {
+                data.picture = image;
+              }
+            });
+          });
+        }
+        return data;
+      })
+    )
   }
 
   scrollBottom() {
@@ -113,6 +163,14 @@ export class ChatListComponent implements OnInit {
       })
     ).subscribe((id) => {
       this.chatHeaderControl.setValue([id]);
+    });
+  }
+
+  report() {
+    let dialogRef = this.dialog.open(ChatReportDialogComponent,
+      { data: { userId: this.userUID, reportedUserId: this.secondUID } });
+    dialogRef.afterClosed().subscribe((_) => {
+      this.router.navigate(['/learning/chats']);
     });
   }
 

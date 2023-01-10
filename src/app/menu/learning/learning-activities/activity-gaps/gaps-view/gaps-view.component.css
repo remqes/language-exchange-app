@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Quicksand';
+  justify-content: center;
+  width: 100%;
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  font-family: 'Quicksand';
+  padding: 0.8rem;
+}
+
+.confirm-button {
+  margin-top: 1em;
+  width: 8rem;
+  background-color: #c49504;
+  color: white;
+  font-family: 'Quicksand';
+}
+
+.confirm {
+  margin-bottom: 1.5rem;
+}
+
+.text {
+  margin: 1.4rem;
+  font-size: large;
+}
+
+.answers{
+  margin: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.answer-input {
+  color: #4472c4;
+}
+
+::ng-deep .mat-select-value {
+  color: #4472c4;
+  padding-top: 1rem;
+  font-size: medium;
+}
+
+::ng-deep .mat-form-field-subscript-wrapper {
+  background-color: #4472c4;
+  color: #4472c4;
+}

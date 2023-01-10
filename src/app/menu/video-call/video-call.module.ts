@@ -8,21 +8,29 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { VideoCallDialogComponent } from './video-call-dialog/video-call-dialog.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
     VideoCallComponent,
+    VideoCallDialogComponent,
   ],
   imports: [
     CommonModule,
     VideoCallRoutingModule,
-    FormsModule,
     ReactiveFormsModule,
+    FormsModule,
 
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    ClipboardModule
   ]
 })
 export class VideoCallModule { }

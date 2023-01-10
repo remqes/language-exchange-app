@@ -14,11 +14,31 @@
 .confirm {
   display: flex;
   justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.confirm-button:disabled {
+  color: white;
+  background-color: #edb2007c;
+}
+
+.answer {
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  font-family: 'Quicksand';
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  font-family: 'Quicksand';
+  padding: 0.8rem;
 }
 
 .confirm-button {
-  margin-top: 1em;
-  width: 11rem;
+  width: 8rem;
   background-color: #c49504;
   color: white;
   font-family: 'Quicksand';
@@ -27,49 +47,4 @@
 .confirm-button:disabled {
   color: white;
   background-color: #edb2007c;
-}
-
-.field {
-  width: 100%;
-  margin-bottom: 2em;
-  margin-top: 1em;
-}
-.question {
-  font-size: large;
-  margin-bottom: 1rem;
-  margin-top: 1em;
-  margin-left: 1.5em;
-  margin-right: 1em;
-  padding-top: 1em;
-}
-
-.answers {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.answer {
-  margin-bottom: 1rem;
-  margin-left: 1.5em;
-  margin-right: 1em;
-  font-family: 'Quicksand';
-}
-
-::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-  opacity: 0 !important; /*click effect color change*/
-  background-color: #31528c !important;
-}
-
-::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #31528c !important; /*inner circle color change*/
-}
-
-::ng-deep .mat-radio-button.mat-accent.mat-radio-checked {
-  border-color: #31528c !important; /*outer ring color change*/
-}
-
-::ng-deep .mat-radio-outer-circle {
-  border-color: rgba(49,82,140,.7);
 }

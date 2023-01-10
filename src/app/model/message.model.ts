@@ -5,8 +5,10 @@ export interface ChatWindow {
   id: string;
   userIds: string[];
   picture?: string;
-  name?: string;
-  bio?: string;
+  name: string;
+  bio: string;
+  toReadBy?: string;
+  userId?: string;
 }
 
 export interface Message {

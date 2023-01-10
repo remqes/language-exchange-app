@@ -1,23 +1,23 @@
-<div class="container">
+<div class="container mat-elevation-z6" *ngIf="isLoadedData; else noData">
   <div class="text">
     <ng-container > {{ text }} </ng-container>
   </div>
   <div class="answers">
     <div class="answer">
-      answer1
-      <mat-select [(value)]="userAnswers[0]">
+      <span>Answer 1</span>
+      <mat-select class="answer-input" [(value)]="userAnswers[0]">
         <mat-option *ngFor="let answer of answers" value="{{ answer }}" >{{ answer }}</mat-option>
       </mat-select>
     </div>
     <div class="answer">
-      answer2
-      <mat-select [(value)]="userAnswers[1]">
+      <span>Answer 2</span>
+      <mat-select class="answer-input" [(value)]="userAnswers[1]">
         <mat-option *ngFor="let answer of answers" value="{{ answer }}">{{ answer }}</mat-option>
       </mat-select>
     </div>
     <div class="answer">
-      answer3
-      <mat-select [(value)]="userAnswers[2]">
+      <span>Answer 3</span>
+      <mat-select class="answer-input" [(value)]="userAnswers[2]">
         <mat-option *ngFor="let answer of answers" value="{{ answer }}">{{ answer }}</mat-option>
       </mat-select>
     </div>
@@ -28,3 +28,10 @@
     </div>
   </div>
 </div>
+
+<ng-template #noData>
+  <div class="no-data mat-elevation-z6">
+    <span>Error while fetching data</span>
+    <button class="confirm-button" mat-raised-button color="primary" (click)="back()">Back</button>
+  </div>
+</ng-template>

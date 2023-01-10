@@ -1,28 +1,36 @@
-<div class="container">
+<div class="container mat-elevation-z6" *ngIf="isLoadedData; else noData">
     <div class="task-header">
-        {{ score }}
-        {{ actualIndex + 1 }} / 10
+        <span>Actual score: {{ score }}</span>
+        <span>{{ actualIndex + 1 }} / 10</span>
     </div>
     <div class="task-content" *ngFor="let flashcard of fetchData$ | async; let i = index">
         <div *ngIf="i === actualIndex">
             <div class="card" [formGroup]="answerForm">
-                {{ flashcard.name }}
+                <span class="flashcard-text">{{ flashcard.name }}</span>
                 <input matInput formControlName="answer">
-                <mat-error *ngIf="isWrong">Try again</mat-error>
+                <mat-error class="answer-error" *ngIf="isWrong">Try again</mat-error>
             </div>
-            <div class="hint1" *ngIf="showHint1">
-                {{ flashcard.hint }}
-            </div>
-            <div class="hint2" *ngIf="showHint2">
-                {{ flashcard.image }}
-                <!-- <img mat-card-image class="hintimage" [src]="flashcard.image" alt=""> -->
+            <div class="hints">
+              <div class="hint" *ngIf="showHint1">
+                <span class="display-hint">Category: {{ flashcard.hint }}</span>
+              </div>
+              <div class="hint" *ngIf="showHint2">
+                  <img mat-card-image class="hintimage" [src]="flashcard.image">
+              </div>
             </div>
             <div class="buttons">
-                <button mat-button color="primary" (click)="showHint()">{{ hintName }}</button>
-                <button *ngIf="goNextButton" mat-raised-button color="primary" (click)="checkAnswer()">{{ buttonName }}</button>
-                <button *ngIf="!goNextButton" mat-raised-button color="primary" (click)="saveAnswers()">Save score</button>
+                <button class="hint-button" mat-button color="primary" (click)="showHint()">{{ hintName }}</button>
+                <button class="confirm-button" *ngIf="goNextButton" mat-raised-button color="primary" (click)="checkAnswer()">{{ buttonName }}</button>
+                <button class="confirm-button" *ngIf="!goNextButton" mat-raised-button color="primary" (click)="saveAnswers()">Save score</button>
             </div>
         </div>
 
     </div>
 </div>
+
+<ng-template #noData>
+  <div class="no-data mat-elevation-z6">
+    <span>Error while fetching data</span>
+    <button class="confirm-button" mat-raised-button color="primary" (click)="back()">Back</button>
+  </div>
+</ng-template>

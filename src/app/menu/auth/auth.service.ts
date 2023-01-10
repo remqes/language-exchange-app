@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { EventTypes } from 'src/app/shared/models/toast-event.model';
-import { ToastService } from 'src/app/shared/toast/toast.service';
 import { UserService } from '../profile/profile-settings/user.service';
 
 @Injectable({
@@ -17,7 +15,6 @@ export class AuthService {
     private auth: Auth,
     private afAuth: AngularFireAuth,
     private router: Router,
-    private toastService: ToastService,
     private userService: UserService) { }
 
   login(email: string, password: string) {
@@ -26,7 +23,6 @@ export class AuthService {
       this.router.navigate(['/chats']);
     },
     err => {
-      this.showToast(EventTypes.Error, err);
       this.router.navigate(['/signup/login']);
     });
   }
@@ -40,7 +36,6 @@ export class AuthService {
         this.router.navigate(['/profile/settings']);
       },
       err => {
-        this.showToast(EventTypes.Error, err);
         this.router.navigate(['/signup/register']);
       });
     }
@@ -63,22 +58,5 @@ export class AuthService {
     err => {
       alert('An error occured!');
     });
-  }
-
-  showToast(type: EventTypes, message: string) {
-    switch (type) {
-      case 'Success':
-        this.toastService.successToast('Success toast title', message);
-        break;
-      case 'Warning':
-        this.toastService.warningToast('Warning toast title', message);
-        break;
-      case 'Error':
-        this.toastService.errorToast('Error toast title', message);
-        break;
-      default:
-        this.toastService.infoToast('Info toast title', message);
-        break;
-    }
   }
 }

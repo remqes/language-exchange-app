@@ -1,49 +1,43 @@
 <div class="container">
-  <div class="nav-bar">
-    <ul>
-      <li>
-        <button type="button" class="nav-link menu-button" mat-raised-button (click)="startWebCam()">Start webcam</button>
-      </li>
-      <li>
-        <button type="button" class="nav-link menu-button" mat-raised-button>Stop webcam</button>
-      </li>
-      <li>
-        <button type="button" class="nav-link menu-button" mat-raised-button (click)="createCall()">Create call</button>
-      </li>
-      <li>
-        <button type="button" class="nav-link menu-button" mat-raised-button>Join call</button>
-      </li>
-      <li>
-        <button type="button" class="nav-link menu-button" mat-raised-button (click)="answerCall()">Answer</button>
-      </li>
-      <li>
-        <button type="button" class="nav-link menu-button" mat-raised-button>Hangup</button>
-      </li>
-    </ul>
-  </div>
-  <div class="callid">
-      <mat-form-field class="example-form-field" #code>
-        <input matInput type="text" >
-        <button matSuffix mat-icon-button >
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-  </div>
+
   <div class="video">
     <div class="localVideo">
       <span>
-        Your's webcam
+        Your webcam
       </span>
-      <div class="videoImage">
-        <video autoplay playsinline id="webcamVideo" #userWebcam></video>
+      <div>
+        <video #localVideo id="local-video" class="videoImage" autoplay playsinline [muted]=true></video>
+      </div>
+      <div class="nav-bar">
+        <ul>
+          <li>
+            <button [ngClass]="{'active': micActive, 'inactive': !micActive}" type="button" class="nav-link menu-button micActive call-button" mat-raised-button (click)="unmuteMicrophone()">
+              <mat-icon>mic</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button [ngClass]="{'active': !micActive, 'inactive': micActive}" type="button" class="nav-link menu-button micActive call-button" mat-raised-button (click)="muteMicrophone()">
+              <mat-icon>mic_off</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="nav-link menu-button call-button" *ngIf="isCallStarted$ | async" mat-raised-button (click)="showModal(false)">Create call</button>
+          </li>
+          <li>
+            <button type="button" class="nav-link menu-button call-button" *ngIf="isCallStarted$ | async" mat-raised-button (click)="showModal(true)">Join call</button>
+          </li>
+          <li>
+            <button type="button" class="nav-link menu-button call-button" *ngIf="!(isCallStarted$ | async)" mat-raised-button (click)="endCall()">Hangup</button>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="remoteVideo">
       <span>
-        Partrner's webcam
+        Partrner webcam
       </span>
-      <div class="videoImage">
-        <video autoplay playsinline id="remoteVideo" #partnerWebcam></video>
+      <div>
+        <video #remoteVideo id="remote-video" class="videoImage" poster="./assets/video-placeholder.jpg" autoplay playsinline></video>
       </div>
     </div>
   </div>

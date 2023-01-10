@@ -4,6 +4,7 @@
   margin-top: 2em;
   align-items: center;
   padding-bottom: 1em;
+  /* background-color: black; */
 }
 
 .options {
@@ -29,62 +30,27 @@
   background-color: #edb2007c;
 }
 
-::ng-deep .mat-form-field {
+/* ramka */
+.form-field-input {
   color: #4472c4 !important;
   border: 1px solid #edb300;
   border-radius: 24px;
   padding: 0.3em;
   width: 22rem;
-}
-
-::ng-deep .mat-form-field{
-  color: #4472c4 !important;
   font-family: 'Quicksand';
 }
 
-/* input text */
-::ng-deep .mat-select-value{
-  color: #4472c4 !important;
-  font-size: 150%;
-  margin-top: 1em;
+.input-label {
+  color: #4472c4;
 }
 
-/* input wrapper */
-::ng-deep .mat-select-arrow-wrapper{
-  color: #4472c4 !important;
+::ng-deep .mat-select-value {
+  color: #4472c4;
+  padding-top: 2rem;
+  font-size: large;
 }
 
-/* input label wrapper
-::ng-deep .mat-form-field-label-wrapper{
-} */
-
-/* input required marker color */
-::ng-deep .mat-form-field-required-marker {
-  color: #4472c4 !important;
-}
-
-/* input placeholder color  */
-::ng-deep .mat-form-field-label {
-  color: #4472c4 !important;
-}
-
-/* input underline before edit color  */
-::ng-deep .mat-form-field-underline{
-  background-color: #31528c !important;
-}
-
-/* input underline after edit color  */
 ::ng-deep .mat-form-field-subscript-wrapper {
-  background-color: #31528c !important;
+  background-color: #4472c4;
+  color: #4472c4;
 }
-
-/* input underline after edit color  */
-::ng-deep .mat-form-field-ripple {
-  background-color: #31528c !important;
-}
-
-::ng-deep .mat-form-field-type-mat-select {
-  color: #31528c !important;
-}
-
-

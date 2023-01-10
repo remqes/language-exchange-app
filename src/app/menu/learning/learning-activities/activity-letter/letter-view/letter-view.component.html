@@ -1,11 +1,12 @@
-<div class="container">
+<div class="container mat-elevation-z6" *ngIf="isLoadedData; else noData">
     <div class="task-header">
-
+      <span>Actual score: {{ score }}</span>
+      <span>{{ actualIndex + 1 }} / 10</span>
     </div>
     <div class="taks-content" *ngFor="let unscramble of fetchData$ | async; let i = index">
         <div *ngIf="i === actualIndex">
             <div class="card" >
-                {{ displayedWord }}
+              <span class="flashcard-text">{{ displayedWord }}</span>
             </div>
                 <div
                     cdkDropList
@@ -16,9 +17,17 @@
                     <div class="example-box" *ngFor="let item of answerWord" cdkDrag>{{item}}</div>
                 </div>
             <div class="buttons">
-                <button mat-button color="primary" (click)="moveNext()">Skip</button>
-                <button mat-raised-button color="primary" (click)="checkAnswer()">Next</button>
+                <button class="hint-button" mat-button color="primary" (click)="moveNext()">Skip</button>
+                <button class="confirm-button" *ngIf="goNextButton" mat-raised-button color="primary" (click)="checkAnswer()">Next</button>
+                <button class="confirm-button" *ngIf="!goNextButton" mat-raised-button color="primary" (click)="saveAnswer()">Save</button>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #noData>
+  <div class="no-data mat-elevation-z6">
+    <span>Error while fetching data</span>
+    <button class="confirm-button" mat-raised-button color="primary" (click)="back()">Back</button>
+  </div>
+</ng-template>

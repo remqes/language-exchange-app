@@ -11,7 +11,6 @@ export class ScoreDialogComponent implements OnInit {
   userUID: string;
   userData: any;
 
-
   constructor(public dialogRef: MatDialogRef<ScoreDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private userService: UserService) { }

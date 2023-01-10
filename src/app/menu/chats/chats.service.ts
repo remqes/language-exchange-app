@@ -2,11 +2,11 @@ import { UserService } from './../profile/profile-settings/user.service';
 import { User } from './../../model/user.model';
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData } from '@angular/fire/firestore';
-import { combineLatest, concatMap, Observable, take, map } from 'rxjs';
+import { combineLatest, concatMap, Observable, take, map, tap } from 'rxjs';
 import { addDoc, collection, doc, query, Timestamp, where, updateDoc, orderBy } from 'firebase/firestore';
 import { ChatWindow, Message } from 'src/app/model/message.model';
 import firebase from 'firebase/compat/app';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class ChatsService {
     return this.userService.currentUserProfile$.pipe(concatMap((user) => {
         const get = query(reference, where('userIds', 'array-contains', this.userUID));
         return collectionData(get, { idField: 'id' }).pipe(
-          map((chat) => this.chatTile(this.userUID ?? '', chat as ChatWindow[]))
+          map((chat) => this.chatTile(this.userUID ?? '', chat as ChatWindow[])),
         ) as Observable<ChatWindow[]>
       }));
   }
@@ -43,11 +43,18 @@ export class ChatsService {
     return collectionData(get) as Observable<Message[]>;
   }
 
-  constructor(private firestore: Firestore, private userService: UserService, private aFirestore: AngularFirestore) { }
+  constructor(
+    private firestore: Firestore,
+    private userService: UserService,
+     private aFirestore: AngularFirestore) { }
 
   addMessage(chatId: string, message: string, id: string): Observable<any> {
     const reference = collection(this.firestore, 'chatChannels', chatId, 'messages');
     const chatReference = doc(this.firestore, 'chatChannels', chatId);
+    let secondUser: string = '';
+    this.aFirestore.collection('chatChannels').doc(chatId).valueChanges().pipe(
+      map((data: any) => data.userIds.filter(dataIds => dataIds !== id).map(ids => secondUser = ids))
+    ).subscribe();
     const sendTime = Timestamp.fromDate(new Date());
     return this.userService.currentUserProfile$.pipe(
       take(1), concatMap((user) => addDoc(reference, {
@@ -56,7 +63,7 @@ export class ChatsService {
         time: sendTime,
       })),
       concatMap(() => updateDoc(chatReference, {
-        toReadBy: '',
+        toReadBy: secondUser,
       })),
     );
   }

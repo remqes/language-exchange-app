@@ -13,6 +13,7 @@ import {
   share,
   multicast,
   toArray,
+  isEmpty,
 } from 'rxjs';
 import { LearningService } from '../../../learning.service';
 import { ScoreDialogComponent } from '../../../score-dialog/score-dialog.component';
@@ -43,6 +44,8 @@ export class FlashcardsViewComponent implements OnInit, OnDestroy {
   saveToArray: Subscription;
   isWrong: boolean = false;
   goNextButton: boolean = true;
+  checkData: Subscription;
+  isLoadedData: boolean = true;
 
   answerForm = this.formBuilder.group({
     answer: [''],
@@ -69,19 +72,28 @@ export class FlashcardsViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchData$ = this.learningService.fetchData();
-    this.fetchData = this.fetchData$.subscribe((data) =>
-      console.info('data1: ', data)
-    );
-    this.saveToArray = this.fetchData$
+    this.fetchData = this.fetchData$.pipe(
+      map(data => data),
+      isEmpty(),
+      tap(data => {
+        if (data)
+          this.isLoadedData = !data
+      })
+    ).subscribe();
+    if (this.isLoadedData) {
+      this.saveToArray = this.fetchData$
       .pipe(map((data) => data.map((data) => data.answer)))
       .subscribe((data) => {
         this.answers = data;
       });
+    }
   }
 
   ngOnDestroy(): void {
-    this.fetchData.unsubscribe();
-    this.saveToArray.unsubscribe();
+    if (this.isLoadedData) {
+      this.fetchData.unsubscribe();
+      this.saveToArray.unsubscribe();
+    }
   }
 
   showHint() {
@@ -132,7 +144,13 @@ export class FlashcardsViewComponent implements OnInit, OnDestroy {
       this.showHint2 = false;
     } else {
       this.hintName = '';
+    }
+    if (this.actualIndex === 9) {
       this.goNextButton = false;
     }
+  }
+
+  back() {
+    this.router.navigate(['/learning/menu']);
   }
 }

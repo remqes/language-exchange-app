@@ -1,13 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { isEmpty, map, Observable, Subscription, tap } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { ENDPOINTURL } from 'src/app/environments/environment';
-import { Quiz } from 'src/app/shared/models/activities.model';
+import { MatDialog } from '@angular/material/dialog';
 import { LearningService } from '../../../learning.service';
 import { ScoreDialogComponent } from '../../../score-dialog/score-dialog.component';
+
+export interface Puzzle {
+  question: string;
+  correctAnswer: string;
+  incorrectAnswer1: string;
+  incorrectAnswer2: string;
+}
 
 @Component({
   selector: 'app-puzzle-view',
@@ -15,86 +19,66 @@ import { ScoreDialogComponent } from '../../../score-dialog/score-dialog.compone
   styleUrls: ['./puzzle-view.component.css']
 })
 export class PuzzleViewComponent implements OnInit, OnDestroy {
-
   score: number = 0;
-  showScore: boolean = false;
-  subscription: Subscription;
+  isLoadedData: boolean = true;
+  answers: boolean = false;
 
-  fetchdata$: Observable<any>;
+  fetchData$: Observable<Puzzle[]>;
+  fetchData: Subscription;
+  checkData: Subscription;
+  questions: Array<string> = [];
+  correctAnswers: Array<string> = [];
 
-  correctAnswer1: string;
-  correctAnswer2: string;
-  correctAnswer3: string;
-
-  respond1: Quiz;
-  respond2: Quiz;
-  respond3: Quiz;
-
-  dataForm = new FormGroup({
-    getAnswer1: new FormControl(),
-    getAnswer2: new FormControl(),
-    getAnswer3: new FormControl(),
-  });
-
-  get getAnswer1() {
-    return this.dataForm.get('getAnswer1');
-  }
-
-  get getAnswer2() {
-    return this.dataForm.get('getAnswer2');
-  }
-
-  get getAnswer3() {
-    return this.dataForm.get('getAnswer3');
-  }
+  puzzleForm: FormGroup;
+  fetchPuzzle: Puzzle[];
 
   constructor(
     private router: Router,
     private learningService: LearningService,
-    private http: HttpClient,
-    private dialog: MatDialog
-  ) { }
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog) {
+      this.puzzleForm = this.formBuilder.group({});
+    }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-}
-
-  ngOnInit(): void {
-    if (!this.learningService.queryParams) {
-      this.router.navigate(['learning/menu']);
-    } else {
-      // this.fetchdata$ = this.learningService.fetchData();
-      this.subscription = this.fetchdata$.subscribe((data) => {
-        console.info('data:', data)
-        this.correctAnswer1 = data[0].correctAnswer;
-        this.correctAnswer2 = data[1].correctAnswer;
-        this.correctAnswer3 = data[2].correctAnswer;
-        this.respond1 = {
-          question: data[0].question, answer1: data[0].correctAnswer, answer2: data[0].incorrectAnswer1,
-          answer3: data[0].incorrectAnswer2, correctAnswer: data[0].correctAnswer
-        };
-        this.respond2 = {
-          question: data[1].question, answer1: data[1].correctAnswer, answer2: data[1].incorrectAnswer1,
-          answer3: data[1].incorrectAnswer2, correctAnswer: data[1].correctAnswer
-        };
-        this.respond3 = {
-          question: data[2].question, answer1: data[2].correctAnswer, answer2: data[2].incorrectAnswer1,
-          answer3: data[2].incorrectAnswer2, correctAnswer: data[2].correctAnswer
-        };
-      })
+    if (this.isLoadedData) {
+      this.fetchData.unsubscribe();
+      this.checkData.unsubscribe();
     }
   }
 
-  confirm() {
-    if(this.getAnswer1 && this.getAnswer2 && this.getAnswer3) {
-      if (this.getAnswer1.value === this.correctAnswer1) {
-        this.score += 50;
-      }
-      if (this.getAnswer2.value === this.correctAnswer2) {
-        this.score += 50;
-      }
-      if (this.getAnswer3.value === this.correctAnswer3) {
-        this.score += 50;
+  ngOnInit(): void {
+    this.fetchData$ = this.learningService.fetchData();
+    this.checkData = this.fetchData$.pipe(
+      map(data => data),
+      isEmpty(),
+      tap(data => {
+        if (data)
+          this.isLoadedData = !data;
+      })
+    ).subscribe();
+
+    if (this.isLoadedData) {
+      this.fetchData = this.fetchData$.pipe(
+        tap(data => {
+          this.fetchPuzzle = data;
+          this.fetchPuzzle.forEach((puzzle) => {
+            this.questions.push(puzzle.question);
+            this.correctAnswers.push(puzzle.correctAnswer);
+            this.puzzleForm.addControl(puzzle.question, new FormControl('', [Validators.required]));
+          })
+        }),
+        map((data) => data)
+      ).subscribe(console.info);
+    }
+  }
+
+  submit() {
+    if (this.puzzleForm.valid) {
+      for (let i = 0; i < this.correctAnswers.length; i++) {
+        if (this.puzzleForm.get(this.questions[i])!.value === this.correctAnswers[i]) {
+          this.score += 50;
+        }
       }
       let dialogRef = this.dialog.open(ScoreDialogComponent, {
         data: { score: this.score }
@@ -105,4 +89,7 @@ export class PuzzleViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  back() {
+    this.router.navigate(['/learning/menu']);
+  }
 }

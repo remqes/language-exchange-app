@@ -1,74 +1,34 @@
-<div class="container">
-  <form [formGroup]="dataForm">
-    <div class="container-tile" *ngIf="respond1">
-      <div class="field mat-elevation-z8">
-        <div class="question">
-          {{ respond1.question }}
-        </div>
-        <div class="answers">
-          <mat-radio-group formControlName="getAnswer1" class="answers">
-            <mat-radio-button class="answer" id="respond1answer1" [value]="respond1.answer1">
-              {{ respond1.answer1 }}
-            </mat-radio-button>
-            <mat-radio-button class="answer" id="respond1answer2" [value]="respond1.answer2">
-              {{ respond1.answer2 }}
-            </mat-radio-button>
-            <mat-radio-button class="answer" id="respond1answer3" [value]="respond1.answer3">
-              {{ respond1.answer3 }}
-            </mat-radio-button>
-          </mat-radio-group>
-
-        </div>
-      </div>
-    </div>
-    <div class="container-tile" *ngIf="respond2">
-      <div class="field mat-elevation-z8">
-        <div class="question">
-          {{ respond2.question }}
-        </div>
-        <div class="answers">
-          <mat-radio-group formControlName="getAnswer2" class="answers">
-            <mat-radio-button class="answer" [value]="respond2.answer1">
-              {{ respond2.answer1 }}
-            </mat-radio-button>
-            <mat-radio-button class="answer" [value]="respond2.answer2">
-              {{ respond2.answer2 }}
-            </mat-radio-button>
-            <mat-radio-button class="answer" [value]="respond2.answer3">
-              {{ respond2.answer3 }}
-            </mat-radio-button>
-          </mat-radio-group>
+<div class="container mat-elevation-z6" *ngIf="isLoadedData; else noData">
+  <form [formGroup]="form">
+      <div *ngFor="let quiz of fetchQuiz">
+        <div class="answer">
+          <p>{{ quiz.question }}</p>
+          <label>
+            <input type="radio" formControlName="{{ quiz.question }}" value="{{ quiz.incorrectAnswer1 }}" />
+            {{ quiz.incorrectAnswer1 }}
+          </label>
+          <br />
+          <label>
+            <input type="radio" formControlName="{{ quiz.question }}" value="{{ quiz.incorrectAnswer2 }}" />
+            {{ quiz.incorrectAnswer2 }}
+          </label>
+          <br />
+          <label>
+            <input type="radio" formControlName="{{ quiz.question }}" value="{{ quiz.correctAnswer }}" />
+            {{ quiz.correctAnswer }}
+          </label>
+          <br />
         </div>
       </div>
-    </div>
-    <div class="container-tile" *ngIf="respond3">
-      <div class="field mat-elevation-z8">
-        <div class="question">
-          {{ respond3.question }}
-        </div>
-        <div class="answers">
-          <mat-radio-group formControlName="getAnswer3" class="answers">
-            <mat-radio-button class="answer" [value]="respond3.answer1">
-              {{ respond3.answer1 }}
-            </mat-radio-button>
-            <mat-radio-button class="answer" [value]="respond3.answer2">
-              {{ respond3.answer2 }}
-            </mat-radio-button>
-            <mat-radio-button class="answer" [value]="respond3.answer3">
-              {{ respond3.answer3 }}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
-    </div>
     <div class="confirm">
-      <button mat-raised-button type="button" class="confirm-button" (click)="confirm()"
-      [disabled]="getAnswer1?.value === null || getAnswer2?.value === null ||
-      getAnswer3?.value === null">Confirm</button>
+      <button mat-raised-button [disabled]="!form.valid" class="confirm-button" (click)="submit()">Submit</button>
     </div>
   </form>
 </div>
 
-<ng-template #notloaded>
-  Cannot load data
+<ng-template #noData>
+  <div class="no-data mat-elevation-z6">
+    <span>Error while fetching data</span>
+    <button class="confirm-button" mat-raised-button [disabled]="" color="primary" (click)="back()">Back</button>
+  </div>
 </ng-template>

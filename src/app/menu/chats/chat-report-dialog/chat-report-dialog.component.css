@@ -1,0 +1,16 @@
+.container {
+  width: 20rem;
+  height: 12rem;
+}
+
+.confirm-button {
+  width: 8rem;
+  background-color: #c49504;
+  color: white;
+  font-family: 'Quicksand';
+}
+
+textarea {
+  width: 80%;
+  height: 60%;
+}

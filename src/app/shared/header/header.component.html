@@ -2,7 +2,7 @@
   <div class="container">
 
     <div class="nav-bar">
-      <img mat-card-image src="../../../assets/logo.png">
+      <img class="logo-image" mat-card-image src="../../../assets/logo.png">
       <ul>
         <li class="nav-item">
           <button class="nav-link menu-button" mat-raised-button i18n routerLink="/partners">Partners</button>
@@ -11,19 +11,40 @@
           <button class="nav-link menu-button" mat-raised-button i18n routerLink="/chats">Chats</button>
         </li>
         <li class="nav-item">
-          <button class="nav-link menu-button" mat-raised-button i18n routerLink="/profile">Profile</button>
-        </li>
-        <li class="nav-item">
           <button class="nav-link menu-button" mat-raised-button i18n routerLink="/learning">Learning</button>
         </li>
         <li class="nav-item">
           <button class="nav-link menu-button" mat-raised-button i18n routerLink="/video-call">Video call</button>
         </li>
-        <li class="nav-item">
-          Logged as {{ username }}
+        <li class="nav-item" *ngIf="user$ | async as user">
+          <button class="menu-button" mat-button [matMenuTriggerFor]="menu" class="userinfo">
+            <img class="button-image" [src]="user.displayedPicture ?? 'assets/kapitanjaszczurka.jpg'">
+            <span class="img-text">{{ user.name }}</span>
+            <mat-icon>expand_more</mat-icon>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="goToSettings()">
+                <span>Profile settings</span>
+              </button>
+              <button mat-menu-item (click)="goToTranslate()">
+                <span>Translator</span>
+              </button>
+              <button mat-menu-item (click)="reportIssue()">
+                <span>Report a issue</span>
+              </button>
+              <button mat-menu-item>
+                <span>Score: {{ user.score }}</span>
+              </button>
+              <button mat-menu-item (click)="logout()">
+                <span>Logout</span>
+              </button>
+            </mat-menu>
+
+          </button>
         </li>
       </ul>
-      <button mat-raised-button class="logout-button" (click)="logout()">Log out</button>
     </div>
   </div>
 </ng-container>
+
+

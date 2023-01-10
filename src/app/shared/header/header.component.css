@@ -2,7 +2,7 @@
   cursor: pointer;
 }
 
-.container img {
+.logo-image {
   width: 5.64583rem;
   height: 4rem;
 }
@@ -24,6 +24,7 @@
   color: #31528c;
   border: 1px solid #31528c;
   width: 6.5rem;
+  font-family: Quicksand;
 }
 
 .menu-button:hover {
@@ -47,4 +48,17 @@
 
 li {
   list-style: none;
+}
+
+.img-text {
+  font-family: Quicksand;
+  margin-left: 3px;
+  margin-right: 5px;
+}
+
+.button-image {
+  border-radius: 100%;
+  margin-right: 8px;
+  width: 30px;
+  height: 30px;
 }

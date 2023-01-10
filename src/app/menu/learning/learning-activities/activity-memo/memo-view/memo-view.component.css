@@ -1,3 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Quicksand';
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 1.5rem;
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  font-family: 'Quicksand';
+  padding: 0.8rem;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(5, 150px);
@@ -6,9 +24,25 @@
   justify-content: center;
 }
 
-.displayText {
-  margin-bottom: 2rem;
+.show-options {
+  text-align: center;
+  font-size: large;
+  margin: 2rem;
 }
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.25rem;
+}
+
+.confirm-button {
+  width: 8rem;
+  background-color: #c49504;
+  color: white;
+  font-family: 'Quicksand';
+}
+
 
 @media (max-width: 600px) {
   .grid {

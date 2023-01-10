@@ -1,20 +1,33 @@
-<div class="container">
+<div class="container mat-elevation-z6" *ngIf="isLoadedData; else noData">
+  <div class="task-header">
+    <span>Actual score: {{ score }}</span>
+    <span>{{ actualIndex }} / 10</span>
+  </div>
+
+  <div class="show-options">
+    <div class="displayText" *ngIf="isGameStarted">
+      <div *ngFor="let text of namesArray; let i = index">
+        <div *ngIf="i === actualIndex">
+          {{ text }}
+        </div>
+      </div>
+    </div>
+    <div class="button" *ngIf="!isGameStarted">
+      <button class="confirm-button" mat-raised-button color="primary" (click)="startGame()">Start game</button>
+    </div>
+  </div>
 
   <div class="p-16">
     <div class="grid p-16">
       <app-memo-card *ngFor="let c of cardsArray" [data]="c" (choosedCard)="choosedCard(c)">
       </app-memo-card>
     </div>
-    <div class="button" *ngIf="!isGameStarted">
-      <button mat-raised-button color="primary" (click)="startGame()">Start game</button>
-    </div>
-    <div class="displayText" *ngIf="isGameStarted">
-      <div *ngFor="let text of namesArray; let i = index">
-        <div *ngIf="i === actualIndex">
-          {{ text }}
-          {{ score }}
-        </div>
-      </div>
-    </div>
   </div>
 </div>
+
+<ng-template #noData>
+  <div class="no-data mat-elevation-z6">
+    <span>Error while fetching data</span>
+    <button class="confirm-button" mat-raised-button color="primary" (click)="back()">Back</button>
+  </div>
+</ng-template>

@@ -1,7 +1,6 @@
 export interface Quiz {
   question: any;
-  answer1: string;
-  answer2: string;
-  answer3: string;
+  incorrectAnswer1: string;
+  incorrectAnswer2: string;
   correctAnswer: string;
 }

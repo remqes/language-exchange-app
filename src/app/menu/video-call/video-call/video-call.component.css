@@ -3,11 +3,23 @@
   background-color: white;
   color: #31528c;
   border: 1px solid #31528c;
-  width: 6.5rem;
+  width: 5.5rem;
+  text-align: center;
 }
 
 .menu-button:hover {
   transform: scale(1.05, 1.05);
+}
+
+.videoImage {
+  width: 500px;
+  height: 300px;
+  background-color: black;
+}
+
+button.active {
+  background-color: #31528c;
+  color: white;
 }
 
 li {
@@ -42,25 +54,25 @@ video {
 }
 
 /* input placeholder color  */
-::ng-deep .mat-form-field-label {
+.mat-form-field-label {
   color: gray !important;
 }
 
 /* input underline before edit color  */
-::ng-deep .mat-form-field-underline{
+.mat-form-field-underline{
   background-color: black !important;
 }
 
 /* input underline after edit color  */
-::ng-deep.mat-form-field-ripple {
+.mat-form-field-ripple {
   background-color: black !important;
 }
 
 /* input required marker color */
-::ng-deep.mat-form-field-required-marker {
+.mat-form-field-required-marker {
   color: gray !important;
 }
 
-::ng-deep.mat-error {
+.mat-error {
   color: gray !important;
 }

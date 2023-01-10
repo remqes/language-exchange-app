@@ -1,0 +1,12 @@
+<div class="container">
+  <h1 mat-dialog-title>Report</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="reportForm">
+      <textarea class="report" formControlName="report" ></textarea>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="confirm-button" (click)="cancel()">Move to menu</button>
+    <button mat-raised-button class="confirm-button" (click)="add()">Send</button>
+  </div>
+</div>

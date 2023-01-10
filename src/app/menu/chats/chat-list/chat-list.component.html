@@ -13,11 +13,14 @@
     </div>
     <mat-selection-list [multiple]="false" [formControl]="chatHeaderControl">
 
-      <mat-list-option *ngFor="let chat of userData" [value]="chat.uid">
-        <img matListAvatar [src]="chat.profilePicturePath ? chat.profilePicturePath : 'assets/kapitanjaszczurka.jpg'" />
+        <mat-list-option *ngFor="let chat of chats$ | async" [value]="chat.id">
+        <img matListAvatar [src]="chat.picture ? chat.picture : 'assets/kapitanjaszczurka.jpg'" />
         <div mat-line class="message">
           <p mat-line class="title">
-            <span class="spanname">{{ chat.name }}</span></p>
+            <span class="spanname">
+              <ng-container class="message-icon" *ngIf="receiveMessage"><mat-icon>message</mat-icon></ng-container>
+              {{ chat.name }}
+            </span></p>
           <p mat-line class="subtitle">
             <span class="spanbio">{{ chat.bio }}</span>
         </p>
@@ -28,11 +31,15 @@
   </div>
   <div class="messages-list mat-elevation-z5">
     <div class="header" *ngIf="choosedChat$ | async as choosed; else noMessages">
-      <img [src]="choosed.picture ? choosed.picture : 'assets/kapitanjaszczurka.jpg'"/>
-      <p>{{ choosed.name }}</p>
+      <div class="icon-name">
+        <img [src]="choosed.picture ? choosed.picture : 'assets/kapitanjaszczurka.jpg'"/>
+        {{ choosed.name }}
+      </div>
+      <button class="report-icon" (click)="report()"><mat-icon>report</mat-icon></button>
     </div>
-    <ng-template #noMessages>
+    <ng-template #noMessages> nie ma wiadomości
     </ng-template>
+
     <mat-divider></mat-divider>
     <div class="chat">
       <ng-container *ngIf="user$ | async as user">

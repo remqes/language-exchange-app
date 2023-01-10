@@ -1,8 +1,8 @@
 import { LearningService } from './../../../learning.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ScoreDialogComponent } from '../../../score-dialog/score-dialog.component';
-import { map, Observable, Subscription } from 'rxjs';
+import { isEmpty, map, Observable, Subscription, tap } from 'rxjs';
 import arrayShuffle from 'array-shuffle';
 import { Router } from '@angular/router';
 
@@ -17,11 +17,12 @@ export interface MemoCard {
   templateUrl: './memo-view.component.html',
   styleUrls: ['./memo-view.component.css']
 })
-export class MemoViewComponent implements OnInit {
+export class MemoViewComponent implements OnDestroy, OnInit {
 
   fetchData$: Observable<MemoCard[]>;
   fetchData: Subscription;
   fetchNames: Subscription;
+  checkData: Subscription;
 
   itemsArray: Array<MemoCard>;
   namesArray: Array<string>;
@@ -31,18 +32,37 @@ export class MemoViewComponent implements OnInit {
   score: number = 0;
   isGameStarted: boolean = false;
   disableCards: boolean = false;
+  isLoadedData: boolean = true;
 
   constructor(private dialog: MatDialog, private learningService: LearningService, private router: Router) {}
 
+  ngOnDestroy(): void {
+      if (this.isLoadedData) {
+        this.checkData.unsubscribe();
+        this.fetchNames.unsubscribe();
+        this.fetchData.unsubscribe();
+      }
+  }
+
   ngOnInit(): void {
     this.fetchData$ = this.learningService.fetchData();
-    this.fetchData = this.fetchData$.subscribe((data) => {
-      this.itemsArray = data;
-      this.setupCards();
-    });
-    this.fetchNames = this.fetchData$.pipe(map((data) => data.map((data) => data.name))).subscribe((data) => {
-      this.namesArray = data;
-    });
+    this.checkData = this.fetchData$.pipe(
+      map(data => data),
+      isEmpty(),
+      tap(data => {
+        if (data)
+          this.isLoadedData = !data;
+      })
+    ).subscribe();
+    if (this.isLoadedData) {
+      this.fetchData = this.fetchData$.subscribe((data) => {
+        this.itemsArray = data;
+        this.setupCards();
+      });
+      this.fetchNames = this.fetchData$.pipe(map((data) => data.map((data) => data.name))).subscribe((data) => {
+        this.namesArray = data;
+      });
+    }
   }
 
   setupCards(): void {
@@ -92,5 +112,9 @@ export class MemoViewComponent implements OnInit {
       }
       this.disableCards = false;
     }, 1000);
+  }
+
+  back() {
+    this.router.navigate(['/learning/menu']);
   }
 }

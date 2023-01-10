@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { LearningService } from './../../../learning.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { map, Observable, Subscription, take } from 'rxjs';
+import { isEmpty, map, Observable, Subscription, take, tap } from 'rxjs';
 import arrayShuffle from 'array-shuffle';
 import { ScoreDialogComponent } from '../../../score-dialog/score-dialog.component';
 
@@ -15,7 +15,7 @@ interface Respond {
   templateUrl: './gaps-view.component.html',
   styleUrls: ['./gaps-view.component.css']
 })
-export class GapsViewComponent implements OnInit {
+export class GapsViewComponent implements OnDestroy, OnInit {
 
   fillGaps: Array<string> = ['(1)_____', '(2)_____', '(3)_____'];
   textArray: Array<string> = [];
@@ -26,7 +26,9 @@ export class GapsViewComponent implements OnInit {
 
   fetchData$: Observable<any>;
   fetchData: Subscription;
+  checkData: Subscription;
   text: string;
+  isLoadedData: boolean = true;
 
   constructor(
     private learningService: LearningService,
@@ -34,11 +36,28 @@ export class GapsViewComponent implements OnInit {
     private dialog: MatDialog
   ) { }
 
+  ngOnDestroy(): void {
+      if (this.isLoadedData) {
+        this.fetchData.unsubscribe();
+        this.checkData.unsubscribe();
+      }
+  }
+
   ngOnInit(): void {
     this.fetchData$ = this.learningService.fetchData();
-    this.fetchData = this.fetchData$.pipe(map(data => data.map(data => data.text))).subscribe(data => {
-      this.text = this.changeText(data);
-    });
+    this.checkData = this.fetchData$.pipe(
+      map(data => data),
+      isEmpty(),
+      tap(data => {
+        if (data)
+          this.isLoadedData = !data
+      })
+    ).subscribe();
+    if (this.isLoadedData) {
+      this.fetchData = this.fetchData$.pipe(map(data => data.map(data => data.text))).subscribe(data => {
+        this.text = this.changeText(data);
+      });
+    }
   }
 
   changeText(text: string) {
@@ -98,5 +117,9 @@ export class GapsViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe((_) => {
       this.router.navigate(['/learning/menu']);
     });
+  }
+
+  back() {
+    this.router.navigate(['/learning/menu']);
   }
 }
