@@ -58,7 +58,7 @@ export class ChatsService {
     const sendTime = Timestamp.fromDate(new Date());
     return this.userService.currentUserProfile$.pipe(
       take(1), concatMap((user) => addDoc(reference, {
-        senderId: id,
+        senderId: user!.uid,
         text: message,
         time: sendTime,
       })),

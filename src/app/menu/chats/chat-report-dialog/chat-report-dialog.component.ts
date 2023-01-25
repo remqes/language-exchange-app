@@ -35,7 +35,6 @@ export class ChatReportDialogComponent implements OnInit {
 
   add() {
     if (this.report?.value) {
-      console.info('data: ', this.data)
       const feedback = this.report.value;
       const uid = this.data.userId;
       const reportedUser = this.data.reportedUserId;

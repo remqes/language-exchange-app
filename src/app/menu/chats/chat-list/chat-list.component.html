@@ -18,7 +18,7 @@
         <div mat-line class="message">
           <p mat-line class="title">
             <span class="spanname">
-              <ng-container class="message-icon" *ngIf="receiveMessage"><mat-icon>message</mat-icon></ng-container>
+              <ng-container class="message-icon" *ngIf="chat.toReadBy === userUID"><mat-icon>message</mat-icon></ng-container>
               {{ chat.name }}
             </span></p>
           <p mat-line class="subtitle">
@@ -37,7 +37,7 @@
       </div>
       <button class="report-icon" (click)="report()"><mat-icon>report</mat-icon></button>
     </div>
-    <ng-template #noMessages> nie ma wiadomości
+    <ng-template #noMessages> No messages
     </ng-template>
 
     <mat-divider></mat-divider>

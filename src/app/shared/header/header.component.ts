@@ -71,7 +71,6 @@ export class HeaderComponent implements DoCheck, OnInit {
   }
 
   reportIssue() {
-    console.info('this.userUID: ', this.userUID)
     const reportedUser = '';
     let dialogRef = this.dialog.open(ReportDialogComponent,
       { data: { userId: this.userUID, reportedUser: reportedUser} });

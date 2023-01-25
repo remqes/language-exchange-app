@@ -58,11 +58,11 @@ export class ChatListComponent implements OnDestroy, OnInit {
   );
   user$ = this.userService.currentUserProfile$;
   users$ = combineLatest([this.userService.users$, this.user$, this.searchControl.valueChanges.pipe(startWith(''))]).pipe(
-      map(([ allUsers, currentUser, searchedUser ]) => allUsers.filter((user) =>
-                user.name?.toLowerCase().includes(searchedUser.toLowerCase()) && user.uid !== currentUser?.uid))
-    );
+    map(([ allUsers, currentUser, searchedUser ]) => allUsers.filter((user) =>
+              user.name?.toLowerCase().includes(searchedUser.toLowerCase()) && user.uid !== currentUser?.uid))
+  );
 
-    chatTxt: Array<ChatList> = [];
+  chatTxt: Array<ChatList> = [];
   router: any;
 
   constructor(
@@ -108,6 +108,7 @@ export class ChatListComponent implements OnDestroy, OnInit {
           }
           data.map(data => this.toReadByValue = data.toReadBy!)
           if (this.userUID === this.toReadByValue) {
+            console.info(this.userUID, this.toReadByValue)
             this.receiveMessage = true;
 
           }

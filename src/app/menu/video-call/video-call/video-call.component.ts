@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { DialogData, VideoCallDialogComponent } from '../video-call-dialog/video-call-dialog.component';
 import { VideoCallService } from '../video-call.service';
 
@@ -20,6 +20,7 @@ export class VideoCallComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private videoCallService: VideoCallService) {
     this.isCallStarted$ = this.videoCallService.isCallStarted$;
+    this.isCallStarted$.pipe(tap(data => console.info('informations: ', data)));
     this.peerId = this.videoCallService.initPeer();
   }
 
@@ -57,11 +58,16 @@ export class VideoCallComponent implements OnInit {
   }
 
   muteMicrophone() {
-    this.videoCallService.muteMicrophone();
+    if (this.localVideo) {
+
+      this.micActive = false;
+    }
   }
 
   unmuteMicrophone() {
-    this.videoCallService.unmuteMicrophone();
-  }
+    if (this.localVideo) {
 
+      this.micActive = true;
+    }
+  }
 }

@@ -143,14 +143,16 @@ export class VideoCallService {
 
   muteMicrophone() {
     if (this.stream) {
-      this.stream.getAudioTracks().forEach(track => track.enabled = false);
+      this.stream.getAudioTracks()[0].enabled = false;
+      console.info('stream mute: ', navigator.mediaDevices)
       this.micActive = false;
     }
   }
 
   unmuteMicrophone() {
     if (this.stream) {
-      this.stream.getAudioTracks().forEach(track => track.enabled = true);
+      
+      console.info('stream unmute: ', navigator.mediaDevices)
       this.micActive = true;
     }
   }

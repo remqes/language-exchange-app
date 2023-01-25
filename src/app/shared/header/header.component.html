@@ -33,7 +33,7 @@
                 <span>Report a issue</span>
               </button>
               <button mat-menu-item>
-                <span>Score: {{ user.score }}</span>
+                <span>Score: {{ user.score | score }}</span>
               </button>
               <button mat-menu-item (click)="logout()">
                 <span>Logout</span>

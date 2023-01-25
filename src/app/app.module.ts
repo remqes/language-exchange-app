@@ -1,3 +1,4 @@
+import { PipeModule } from './pipe/pipe/pipe.module';
 import { VideoCallModule } from './menu/video-call/video-call.module';
 import { HeaderComponent } from './shared/header/header.component';
 import { SharedModule } from './shared/shared.module';
@@ -47,6 +48,7 @@ import { MatMenuModule } from '@angular/material/menu';
     VideoCallModule,
     FormsModule,
     HttpClientModule,
+    PipeModule,
 
     MatInputModule,
     MatFormFieldModule,

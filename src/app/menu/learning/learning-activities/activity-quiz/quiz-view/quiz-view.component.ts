@@ -69,7 +69,7 @@ export class QuizViewComponent implements OnInit, OnDestroy {
           })
         }),
         map((data) => data)
-      ).subscribe(console.info);
+      ).subscribe();
     }
   }
 

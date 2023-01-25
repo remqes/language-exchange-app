@@ -21,13 +21,13 @@
             </button>
           </li>
           <li>
-            <button type="button" class="nav-link menu-button call-button" *ngIf="isCallStarted$ | async" mat-raised-button (click)="showModal(false)">Create call</button>
+            <button type="button" class="nav-link menu-button call-button" [disabled]="isCallStarted$ | async" [hidden]="isCallStarted$ | async" mat-raised-button (click)="showModal(false)">Create call</button>
           </li>
           <li>
-            <button type="button" class="nav-link menu-button call-button" *ngIf="isCallStarted$ | async" mat-raised-button (click)="showModal(true)">Join call</button>
+            <button type="button" class="nav-link menu-button call-button" [disabled]="isCallStarted$ | async" [hidden]="isCallStarted$ | async" mat-raised-button (click)="showModal(true)">Join call</button>
           </li>
           <li>
-            <button type="button" class="nav-link menu-button call-button" *ngIf="!(isCallStarted$ | async)" mat-raised-button (click)="endCall()">Hangup</button>
+            <button type="button" class="nav-link menu-button call-button" [disabled]="!(isCallStarted$ | async)" [hidden]="!(isCallStarted$ | async)" mat-raised-button (click)="endCall()">Hangup</button>
           </li>
         </ul>
       </div>

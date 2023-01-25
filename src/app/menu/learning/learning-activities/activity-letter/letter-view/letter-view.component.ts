@@ -117,5 +117,3 @@ export class LetterViewComponent implements OnDestroy, OnInit {
     this.router.navigate(['/learning/menu']);
   }
 }
-
-//20pkt za kazde
